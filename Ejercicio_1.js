@@ -8,10 +8,18 @@ function iniciaCronometro() {
 
 
 
-    var primera_vuelta = true
+    var start_pulsado = false
     startCrono.addEventListener("click", (evt) => {
+        if (!start_pulsado) {
+            start_pulsado = true
+            startCrono.innerHTML = "Pausar"
+            intervalo_cronometro = window.setInterval(activarCrono, 100)
+        } else {
+            start_pulsado = false
+            startCrono.innerHTML = "Start"
+            clearInterval(intervalo_cronometro)
+        }
 
-        intervalo_cronometro = window.setInterval(activarCrono, 100)
 
     })
 
