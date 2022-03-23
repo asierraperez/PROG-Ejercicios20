@@ -4,13 +4,20 @@ var horas, min, seg
 function iniciaTemporizador() {
 
     var inicio_Temp = document.getElementById("start_temporizador")
+    var stop_temp = document.getElementById("stop_temporizador")
+    var reset_temp = document.getElementById("restart_temporizador")
     var tiempo_temp = document.getElementById("text_temporizador")
+    var stop_pulsado = false
 
     inicio_Temp.addEventListener("click", (evt) => {
         evt.currentTarget.disabled = true
-        horas = document.getElementById("horas_temporizador").value
-        min = document.getElementById("minutos_temporizador").value
-        seg = document.getElementById("segundos_temporizador").value
+        stop_temp.disabled = false
+        reset_temp.disabled = false
+        if (!stop_pulsado) {
+            horas = document.getElementById("horas_temporizador").value
+            min = document.getElementById("minutos_temporizador").value
+            seg = document.getElementById("segundos_temporizador").value
+        }
         var aux_hora, aux_min, aux_seg
         var tiempo_ms = (horas * 3600 * 1000) + (min * 60 * 1000) + (seg * 1000)
         console.log(tiempo_ms)
@@ -19,17 +26,46 @@ function iniciaTemporizador() {
         temporizador_temporizador = setTimeout(activarTemporizador, tiempo_ms, tiempo_temp)
 
         seg > 10 ? aux_seg = seg : aux_seg = "0" + seg
-        min > 10 ? aux_min = m : aux_min = "0" + min
+        min > 10 ? aux_min = min : aux_min = "0" + min
         horas > 10 ? aux_hora = horas : aux_hora = "0" + horas
 
         tiempo_temp.innerHTML = aux_hora + ":" + aux_min + ":" + aux_seg
     })
+
+    stop_temp.addEventListener("click", (evt) => {
+        evt.currentTarget.disabled = true
+        inicio_Temp.disabled = false
+
+        stop_pulsado = true
+
+        clearInterval(intervalo_temporizador)
+        clearInterval(temporizador_temporizador)
+    })
+
+    reset_temp.addEventListener("click", (evt) => {
+        evt.currentTarget.disabled = true
+        stop_temp.disabled = true
+        inicio_Temp.disabled = false
+        clearInterval(intervalo_temporizador)
+        clearInterval(temporizador_temporizador)
+        document.getElementById("horas_temporizador").value = 0
+        document.getElementById("minutos_temporizador").value = 0
+        document.getElementById("segundos_temporizador").value = 0
+        horas = 0
+        min = 0
+        seg = 0
+        tiempo_temp.innerHTML = "00:00:00"
+
+    })
+
+
 }
 
 function activarTemporizador(tiempo) {
     alert("El temporizador ha terminado")
     clearInterval(intervalo_temporizador)
     clearInterval(temporizador_temporizador)
+
     tiempo.innerHTML = "00:00:00"
 }
 
@@ -50,18 +86,6 @@ function int_temporizador(tiempo) {
         }
         seg = 59
     }
-
-
-    if (seg == 0) {
-
-
-        /*if (min == 0) {
-            
-        } else {
-           
-        }*/
-    }
-
 
     seg > 10 ? html_s = seg : html_s = "0" + seg
     min > 10 ? html_m = min : html_m = "0" + min
