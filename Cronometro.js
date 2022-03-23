@@ -34,16 +34,17 @@ function activarCrono() {
     if (ms > 9) {
         s++
         ms = 0
+        if (s > 59) {
+            m++
+            s = 0
+            if (m > 59) {
+                h++
+                m = 0
+            }
+        }
 
     }
-    if (s > 59) {
-        m++
-        s = 0
-    }
-    if (m > 59) {
-        h++
-        m = 0
-    }
+
 
     ms > 10 ? aux_ms = ms : aux_ms = "0" + ms
     s > 10 ? aux_s = s : aux_s = "0" + s

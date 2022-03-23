@@ -71,6 +71,7 @@ function __main__() {
     window.intervalo_reloj = null;
     window.intervalo_cronometro = null;
     window.temporizador_temporizador = null;
+    window.intervalo_temporizador = null;
 
     //AQUI LAS LLAMADAS A CREACIÓN DE INTERVALOS
 

@@ -1,26 +1,72 @@
+var horas, min, seg
+
+
 function iniciaTemporizador() {
 
     var inicio_Temp = document.getElementById("start_temporizador")
     var tiempo_temp = document.getElementById("text_temporizador")
 
     inicio_Temp.addEventListener("click", (evt) => {
-        var horas = document.getElementById("horas_temporizador").value
-        var min = document.getElementById("minutos_temporizador").value
-        var seg = document.getElementById("segundos_temporizador").value
+        evt.currentTarget.disabled = true
+        horas = document.getElementById("horas_temporizador").value
+        min = document.getElementById("minutos_temporizador").value
+        seg = document.getElementById("segundos_temporizador").value
         var aux_hora, aux_min, aux_seg
         var tiempo_ms = (horas * 3600 * 1000) + (min * 60 * 1000) + (seg * 1000)
         console.log(tiempo_ms)
-        temporizador_temporizador = window.setTimeout(activarTemporizador, tiempo_ms)
 
+        intervalo_temporizador = setInterval(int_temporizador, 1000, tiempo_temp)
+        temporizador_temporizador = setTimeout(activarTemporizador, tiempo_ms, tiempo_temp)
 
         seg > 10 ? aux_seg = seg : aux_seg = "0" + seg
         min > 10 ? aux_min = m : aux_min = "0" + min
         horas > 10 ? aux_hora = horas : aux_hora = "0" + horas
 
-        tiempo_temp.innerHTML = + aux_hora + ":" + aux_min + ":" + aux_seg
+        tiempo_temp.innerHTML = aux_hora + ":" + aux_min + ":" + aux_seg
     })
 }
 
-function activarTemporizador() {
+function activarTemporizador(tiempo) {
     alert("El temporizador ha terminado")
+    clearInterval(intervalo_temporizador)
+    clearInterval(temporizador_temporizador)
+    tiempo.innerHTML = "00:00:00"
+}
+
+function int_temporizador(tiempo) {
+
+    var html_h, html_m, html_s
+
+    if (seg != 0) {
+        seg--
+    } else {
+        if (min == 0) {
+            horas--
+            min = 59
+
+        } else {
+            min--
+
+        }
+        seg = 59
+    }
+
+
+    if (seg == 0) {
+
+
+        /*if (min == 0) {
+            
+        } else {
+           
+        }*/
+    }
+
+
+    seg > 10 ? html_s = seg : html_s = "0" + seg
+    min > 10 ? html_m = min : html_m = "0" + min
+    horas > 10 ? html_h = horas : html_h = "0" + horas
+
+    tiempo.innerHTML = html_h + ":" + html_m + ":" + html_s
+
 }
