@@ -3,37 +3,25 @@
 
 <head>
     <title>Reloj multitarea</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        #grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 10px;
-            grid-auto-rows: minmax(100px, auto);
-        }
 
-        #cambio {
-            margin-top: 10%;
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        #funciones {
-            grid-column: 2;
-            grid-row: 1;
-        }
     </style>
 </head>
+<header>Reloj Multifunción</header>
 
 <body>
     <div id="grid">
         <div id="cambio">
-            <button id="activar_reloj">Reloj</button>
+            <button class="boton" id="activar_reloj"><img src="./imagenes/reloj.png" alt="Reloj"> Reloj</button>
             <br>
             <br>
-            <button id="activar_cronometro">Cronómetro</button>
+            <button class="boton" id="activar_cronometro"><img src="./imagenes/crono.png" alt="Cronómetro">
+                Cronómetro</button>
             <br>
             <br>
-            <button id="activar_temporizador">Temporizador</button>
+            <button class="boton" id="activar_temporizador"><img src="./imagenes/temporizador.png" alt="Temporizador">
+                Temporizador</button>
             <br>
             <br>
         </div>
@@ -43,11 +31,17 @@
                 <p id="text_reloj">00:00:00</p>
             </div>
             <div id="cronometro" hidden>
-                <p>Cronómetro</p>
-                <p id="text_cronometro">00:00:00:00</p>
-                <ul id="tiempos_parciales"></ul>
-                <button id="start_cronometro">Start</button>
-                <button id="flag_cronometro" disabled>Flag</button>
+                <div>
+                    <p>Cronómetro</p>
+                    <p id="text_cronometro">00:00:00:00</p>
+                    <button class="start" id="start_cronometro">Start</button>
+                    <button class="stop" id="flag_cronometro" disabled>Flag</button>
+                </div>
+                <div>
+                    <ul id="tiempos_parciales"></ul>
+                </div>
+
+
             </div>
             <div id="temporizador" hidden>
                 <p>Temporizador</p>
@@ -56,8 +50,9 @@
                     id="segundos_temporizador"></select>
                 <br>
                 <br>
-                <button id="start_temporizador">Start</button> <button id="stop_temporizador" disabled>Stop</button>
-                <button id="restart_temporizador" disabled>Restart</button>
+                <button class="start" id="start_temporizador">Start</button> <button class="stop" id="stop_temporizador"
+                    disabled>Stop</button>
+                <button class="restart" id="restart_temporizador" disabled>Restart</button>
             </div>
         </div>
     </div>

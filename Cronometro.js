@@ -8,12 +8,15 @@ function iniciaCronometro() {
     var flagCrono = document.getElementById("flag_cronometro")
     var start_pulsado = false
     startCrono.addEventListener("click", (evt) => {
+
         if (!start_pulsado) {
+            evt.currentTarget.style.backgroundColor = "firebrick"
             flagCrono.disabled = false
             start_pulsado = true
             startCrono.innerHTML = "Pausar"
             intervalo_cronometro = window.setInterval(activarCrono, 100)
         } else {
+            evt.currentTarget.style.backgroundColor = "chartreuse"
             flagCrono.disabled = true
             start_pulsado = false
             startCrono.innerHTML = "Start"

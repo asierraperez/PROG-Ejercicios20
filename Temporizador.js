@@ -17,6 +17,7 @@ function iniciaTemporizador() {
             horas = document.getElementById("horas_temporizador").value
             min = document.getElementById("minutos_temporizador").value
             seg = document.getElementById("segundos_temporizador").value
+            stop_pulsado = false
         }
         var aux_hora, aux_min, aux_seg
         var tiempo_ms = (horas * 3600 * 1000) + (min * 60 * 1000) + (seg * 1000)
@@ -30,6 +31,9 @@ function iniciaTemporizador() {
         horas > 10 ? aux_hora = horas : aux_hora = "0" + horas
 
         tiempo_temp.innerHTML = aux_hora + ":" + aux_min + ":" + aux_seg
+        if (tiempo_temp.innerHTML == "00:00:00") {
+            stop_temp.disabled = true
+        }
     })
 
     stop_temp.addEventListener("click", (evt) => {
@@ -46,6 +50,7 @@ function iniciaTemporizador() {
         evt.currentTarget.disabled = true
         stop_temp.disabled = true
         inicio_Temp.disabled = false
+        stop_pulsado = false
         clearInterval(intervalo_temporizador)
         clearInterval(temporizador_temporizador)
         document.getElementById("horas_temporizador").value = 0
@@ -61,7 +66,7 @@ function iniciaTemporizador() {
 
 }
 
-function activarTemporizador(tiempo) {
+function activarTemporizador(tiempo, stop_deshabilitado) {
     alert("El temporizador ha terminado")
     clearInterval(intervalo_temporizador)
     clearInterval(temporizador_temporizador)
