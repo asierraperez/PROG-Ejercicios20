@@ -41,22 +41,38 @@ function botones() {
     evento_activar(activar_temporizador, activar_cronometro, activar_reloj);
 }
 
-function activarReloj() {
-    var text_reloj = document.getElementById("text_reloj");
-    var fecha = new Date();
-    var hora = fecha.getHours();
-    var minutos = fecha.getMinutes();
-    var segundos = fecha.getSeconds();
-    text_reloj.innerHTML = hora + ":" + minutos + ":" + segundos;
+function activarReloj(reloj) {
+
+    reloj.setDate()
+    reloj.time.innerHTML = reloj.hour + ":" + reloj.min + ":" + reloj.sec;
 
 }
 
 function crearIntervaloReloj() {
-    intervalo_reloj = setInterval(activarReloj, 1000);
+    class clock {
+        constructor(time, date, hour, min, sec, intervalClock) {
+            this.time = time
+            this.date = date
+            this.hour = hour
+            this.min = min
+            this.sec = sec
+            this.intervalClock = intervalClock
+        }
+        setDate() {
+            this.date = new Date()
+            this.hour = this.date.getHours()
+            this.min = this.date.getMinutes()
+            this.sec = this.date.getSeconds()
+        }
+    }
+
+    const clk = new clock(document.getElementById("text_reloj"),
+        null, 0, 0, 0, null)
+    clk.intervalClock = setInterval(activarReloj, 1000, clk);
 }
 
-function stopIntervaloReloj() {
-    clearInterval(intervalo_reloj);
+function stopIntervaloReloj(reloj) {
+    clearInterval(reloj.intervalClock);
 }
 
 function __main__() {
@@ -70,8 +86,8 @@ function __main__() {
 
     window.intervalo_reloj = null;
     //window.intervalo_cronometro = null;
-    window.temporizador_temporizador = null;
-    window.intervalo_temporizador = null;
+    //window.temporizador_temporizador = null;
+    //window.intervalo_temporizador = null;
 
     //AQUI LAS LLAMADAS A CREACIÓN DE INTERVALOS
 
