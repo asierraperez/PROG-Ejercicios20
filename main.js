@@ -69,7 +69,7 @@ function __main__() {
     //Y no tener que utilizar parámetros para enviar o recibirlas, pues puede acabar liándonos en estos ejercicos.
 
     window.intervalo_reloj = null;
-    window.intervalo_cronometro = null;
+    //window.intervalo_cronometro = null;
     window.temporizador_temporizador = null;
     window.intervalo_temporizador = null;
 
