@@ -48,7 +48,7 @@ function iniciaCronometro() {
 
 function activarCrono(aux_chrono) {
 
-    /*
+    /**
     auxiliar para el display del tiempo.
     en caso de que las unidades sean >10, añadirá un 0 delante
     [0]==horas

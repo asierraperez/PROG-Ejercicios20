@@ -1,6 +1,3 @@
-var horas, min, seg
-
-
 function iniciaTemporizador() {
 
     class Temporizer {
@@ -20,109 +17,129 @@ function iniciaTemporizador() {
             this.timeoutTemporizer = timeoutTemporizer
 
         }
+
+        calcularTimeoutTime() {
+            this.timeoutTime = (this.hour * 3600 * 1000) + (this.min * 60 * 1000) + (this.sec * 1000)
+            return this.timeoutTime
+        }
+
     }
     var temp = new Temporizer(document.getElementById("start_temporizador"),
         document.getElementById("stop_temporizador"),
         document.getElementById("restart_temporizador"),
         false,
-        document.getElementById("text_temporizador"),
-        document.getElementById("horas_temporizador").value,
-        document.getElementById("minutos_temporizador").value,
-        document.getElementById("segundos_temporizador").value,
-        0, null, 0, null)
+        document.getElementById("text_temporizador"), 0, 0, 0, 0, null, 0, null)
     /*var inicio_Temp = 
     var stop_temp = 
     var reset_temp = 
     var tiempo_temp = document.getElementById("text_temporizador")
     var stop_pulsado = false*/
 
-    inicio_Temp.addEventListener("click", (evt) => {
+    temp.start.addEventListener("click", (evt) => {
         evt.currentTarget.disabled = true
-        stop_temp.disabled = false
-        reset_temp.disabled = false
-        if (!stop_pulsado) {
-            horas = document.getElementById("horas_temporizador").value
-            min = document.getElementById("minutos_temporizador").value
-            seg = document.getElementById("segundos_temporizador").value
-            stop_pulsado = false
+        temp.stop.disabled = false
+        temp.reset.disabled = false
+        if (!temp.stopPressed) {
+            temp.hour = document.getElementById("horas_temporizador").value
+            temp.min = document.getElementById("minutos_temporizador").value
+            temp.sec = document.getElementById("segundos_temporizador").value
+            temp.stopPressed = false
         }
-        var aux_hora, aux_min, aux_seg
-        var tiempo_ms = (horas * 3600 * 1000) + (min * 60 * 1000) + (seg * 1000)
-        console.log(tiempo_ms)
 
-        intervalo_temporizador = setInterval(int_temporizador, 1000, tiempo_temp)
-        temporizador_temporizador = setTimeout(activarTemporizador, tiempo_ms, tiempo_temp)
+        /**
+    auxiliar para el display del tiempo.
+    en caso de que las unidades sean >10, añadirá un 0 delante
+    [0]==horas
+    [1]==minutos
+    [2]==segundos
+    [3]==milisegundos
+    */
+        var aux_time = ["", "", "", ""]
+        //var tiempo_ms = (horas * 3600 * 1000) + (min * 60 * 1000) + (seg * 1000)
+        temp.calcularTimeoutTime()
+        console.log(temp.timeoutTime)
 
-        seg > 10 ? aux_seg = seg : aux_seg = "0" + seg
-        min > 10 ? aux_min = min : aux_min = "0" + min
-        horas > 10 ? aux_hora = horas : aux_hora = "0" + horas
+        temp.intervalTemporizer = setInterval(int_temporizador, 1000, temp)
+        temp.timeoutTemporizer = setTimeout(activarTemporizador, temp.timeoutTime, temp)
 
-        tiempo_temp.innerHTML = aux_hora + ":" + aux_min + ":" + aux_seg
-        if (tiempo_temp.innerHTML == "00:00:00") {
-            stop_temp.disabled = true
+        temp.sec >= 10 ? aux_time[2] = temp.sec : aux_time[2] = "0" + temp.sec
+        temp.min >= 10 ? aux_time[1] = temp.min : aux_time[1] = "0" + temp.min
+        temp.hour >= 10 ? aux_time[0] = temp.hour : aux_time[0] = "0" + temp.hour
+
+        temp.time.innerHTML = aux_time[0] + ":" + aux_time[1] + ":" + aux_time[2]
+        if (temp.time.innerHTML == "00:00:00") {
+            temp.stop.disabled = true
         }
     })
 
-    stop_temp.addEventListener("click", (evt) => {
+    temp.stop.addEventListener("click", (evt) => {
         evt.currentTarget.disabled = true
-        inicio_Temp.disabled = false
+        temp.start.disabled = false
 
-        stop_pulsado = true
+        temp.stopPressed = true
 
-        clearInterval(intervalo_temporizador)
-        clearInterval(temporizador_temporizador)
+        clearInterval(temp.intervalTemporizer)
+        clearTimeout(temp.timeoutTemporizer)
     })
 
-    reset_temp.addEventListener("click", (evt) => {
+    temp.reset.addEventListener("click", (evt) => {
         evt.currentTarget.disabled = true
-        stop_temp.disabled = true
-        inicio_Temp.disabled = false
-        stop_pulsado = false
-        clearInterval(intervalo_temporizador)
-        clearInterval(temporizador_temporizador)
+        temp.stop.disabled = true
+        temp.start.disabled = false
+        temp.stopPressed = false
+        clearInterval(temp.intervalTemporizer)
+        clearTimeout(temp.timeoutTemporizer)
         document.getElementById("horas_temporizador").value = 0
         document.getElementById("minutos_temporizador").value = 0
         document.getElementById("segundos_temporizador").value = 0
-        horas = 0
-        min = 0
-        seg = 0
-        tiempo_temp.innerHTML = "00:00:00"
+        temp.hour = 0
+        temp.min = 0
+        temp.sec = 0
+        temp.time.innerHTML = "00:00:00"
 
     })
 
 
 }
 
-function activarTemporizador(tiempo, stop_deshabilitado) {
+function activarTemporizador(tiempo) {
     alert("El temporizador ha terminado")
-    clearInterval(intervalo_temporizador)
-    clearInterval(temporizador_temporizador)
+    clearInterval(tiempo.intervalTemporizer)
+    clearTimeout(tiempo.timeoutTemporizer)
 
-    tiempo.innerHTML = "00:00:00"
+    tiempo.time.innerHTML = "00:00:00"
 }
 
 function int_temporizador(tiempo) {
 
-    var html_h, html_m, html_s
+    /**
+        auxiliar para el display del tiempo.
+        en caso de que las unidades sean >10, añadirá un 0 delante
+        [0]==horas
+        [1]==minutos
+        [2]==segundos
+        [3]==milisegundos
+        */
+    var aux_time = ["", "", "", ""]
 
-    if (seg != 0) {
-        seg--
+    if (tiempo.sec != 0) {
+        tiempo.sec--
     } else {
-        if (min == 0) {
-            horas--
-            min = 59
+        if (tiempo.min == 0) {
+            tiempo.hour--
+            tiempo.min = 59
 
         } else {
-            min--
+            tiempo.min--
 
         }
-        seg = 59
+        tiempo.sec = 59
     }
 
-    seg > 10 ? html_s = seg : html_s = "0" + seg
-    min > 10 ? html_m = min : html_m = "0" + min
-    horas > 10 ? html_h = horas : html_h = "0" + horas
+    tiempo.sec >= 10 ? aux_time[2] = tiempo.sec : aux_time[2] = "0" + tiempo.sec
+    tiempo.min >= 10 ? aux_time[1] = tiempo.min : aux_time[1] = "0" + tiempo.min
+    tiempo.hour >= 10 ? aux_time[0] = tiempo.hour : aux_time[0] = "0" + tiempo.hour
 
-    tiempo.innerHTML = html_h + ":" + html_m + ":" + html_s
+    tiempo.time.innerHTML = aux_time[0] + ":" + aux_time[1] + ":" + aux_time[2]
 
 }
