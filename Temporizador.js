@@ -3,11 +3,38 @@ var horas, min, seg
 
 function iniciaTemporizador() {
 
-    var inicio_Temp = document.getElementById("start_temporizador")
-    var stop_temp = document.getElementById("stop_temporizador")
-    var reset_temp = document.getElementById("restart_temporizador")
+    class Temporizer {
+        constructor(start, stop, reset, stopPressed, time, hour, min, sec,
+            intervalTime, intervalTemporizer, timeoutTime, timeoutTemporizer) {
+            this.start = start
+            this.stop = stop
+            this.reset = reset
+            this.stopPressed = stopPressed
+            this.time = time
+            this.hour = hour
+            this.min = min
+            this.sec = sec
+            this.intervalTime = intervalTime
+            this.intervalTemporizer = intervalTemporizer
+            this.timeoutTime = timeoutTime
+            this.timeoutTemporizer = timeoutTemporizer
+
+        }
+    }
+    var temp = new Temporizer(document.getElementById("start_temporizador"),
+        document.getElementById("stop_temporizador"),
+        document.getElementById("restart_temporizador"),
+        false,
+        document.getElementById("text_temporizador"),
+        document.getElementById("horas_temporizador").value,
+        document.getElementById("minutos_temporizador").value,
+        document.getElementById("segundos_temporizador").value,
+        0, null, 0, null)
+    /*var inicio_Temp = 
+    var stop_temp = 
+    var reset_temp = 
     var tiempo_temp = document.getElementById("text_temporizador")
-    var stop_pulsado = false
+    var stop_pulsado = false*/
 
     inicio_Temp.addEventListener("click", (evt) => {
         evt.currentTarget.disabled = true
