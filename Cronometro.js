@@ -4,57 +4,75 @@ var s = 0
 var ms = 0
 
 function iniciaCronometro() {
-    var startCrono = document.getElementById("start_cronometro")
-    var flagCrono = document.getElementById("flag_cronometro")
-    var start_pulsado = false
-    startCrono.addEventListener("click", (evt) => {
+    class Chronometer {
+        constructor(start, flag, startPressed, intervalChrono, intervalTime, hour, min, sec, msec, time) {
+            this.start = start
+            this.flag = flag
+            this.startPressed = startPressed
+            this.intervalChrono = intervalChrono
+            this.intervalTime = intervalTime
+            this.hour = hour
+            this.min = min
+            this.sec = sec
+            this.msec = msec
+            this.time = time
+        }
+    }
+    const Chrono = new Chronometer(document.getElementById("start_cronometro"),
+        document.getElementById("flag_cronometro"),
+        false, null, 100, 0, 0, 0, 0,
+        document.getElementById("text_cronometro"))
+    //var startCrono = document.getElementById("start_cronometro")
+    //var flagCrono = document.getElementById("flag_cronometro")
+    //var start_pulsado = false
+    Chrono.start.addEventListener("click", (evt) => {
 
-        if (!start_pulsado) {
+        if (!Chrono.startPressed) {
             evt.currentTarget.style.backgroundColor = "firebrick"
-            flagCrono.disabled = false
-            start_pulsado = true
-            startCrono.innerHTML = "Pausar"
-            intervalo_cronometro = window.setInterval(activarCrono, 100)
+            Chrono.flag.disabled = false
+            Chrono.startPressed = true
+            Chrono.start.innerHTML = "Pausar"
+            Chrono.intervalChrono = window.setInterval(activarCrono, Chrono.intervalTime, Chrono)
         } else {
             evt.currentTarget.style.backgroundColor = "chartreuse"
-            flagCrono.disabled = true
-            start_pulsado = false
-            startCrono.innerHTML = "Start"
-            clearInterval(intervalo_cronometro)
+            Chrono.flag.disabled = true
+            Chrono.startPressed = false
+            Chrono.start.innerHTML = "Start"
+            clearInterval(Chrono.intervalChrono)
         }
     })
-    flagCrono.addEventListener("click", (evt) => {
+    Chrono.flag.addEventListener("click", (evt) => {
         tiempoVuelta()
     })
 
 }
 
-function activarCrono() {
-    var crono = document.getElementById("text_cronometro")
+function activarCrono(aux_chrono) {
+    //var crono = document.getElementById("text_cronometro")
     var aux_h, aux_m, aux_s, aux_ms
-
-    ms++
-    if (ms > 9) {
-        s++
-        ms = 0
-        if (s > 59) {
-            m++
-            s = 0
-            if (m > 59) {
-                h++
-                m = 0
+    aux_chrono.msec++
+    //ms++
+    if (aux_chrono.msec > 9) {
+        aux_chrono.sec++
+        aux_chrono.msec = 0
+        if (aux_chrono.sec > 59) {
+            aux_chrono.min++
+            aux_chrono.sec = 0
+            if (aux_chrono.min > 59) {
+                aux_chrono.hour++
+                aux_chrono.min = 0
             }
         }
 
     }
 
 
-    ms > 10 ? aux_ms = ms : aux_ms = "0" + ms
-    s > 10 ? aux_s = s : aux_s = "0" + s
-    m > 10 ? aux_m = m : aux_m = "0" + m
-    h > 10 ? aux_h = h : aux_h = "0" + h
+    aux_chrono.msec > 10 ? aux_ms = aux_chrono.msec : aux_ms = "0" + aux_chrono.msec
+    aux_chrono.sec > 10 ? aux_s = aux_chrono.sec : aux_s = "0" + aux_chrono.sec
+    aux_chrono.min > 10 ? aux_m = aux_chrono.min : aux_m = "0" + aux_chrono.min
+    aux_chrono.hour > 10 ? aux_h = aux_chrono.hour : aux_h = "0" + aux_chrono.hour
 
-    crono.innerHTML = aux_h + ":" + aux_m + ":" + aux_s + ":" + aux_ms
+    aux_chrono.time.innerHTML = aux_h + ":" + aux_m + ":" + aux_s + ":" + aux_ms
 }
 
 function tiempoVuelta() {
