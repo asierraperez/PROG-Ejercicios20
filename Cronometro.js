@@ -1,8 +1,3 @@
-var h = 0
-var m = 0
-var s = 0
-var ms = 0
-
 function iniciaCronometro() {
     class Chronometer {
         constructor(start, flag, startPressed, intervalChrono, intervalTime,
