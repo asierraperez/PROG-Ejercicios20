@@ -1,13 +1,14 @@
-function iniciaCronometro() {
+function iniciaCronometro(chrono_time) {
 
-    const Chronometer = ObjectChronometer()
+    const Chronometer = ObjectChronometer(chrono_time)
 
-
-    const Chrono = new Chronometer(document.getElementById("start_cronometro"),
-        document.getElementById("flag_cronometro"),
-        false, null, 100, 0, 0, 0, 0,
+    const Chrono = new Chronometer(0, 0, 0, 0,
         document.getElementById("text_cronometro"),
-        document.getElementById("tiempos_parciales"), "")
+        "", "", "", "",
+        document.getElementById("start_cronometro"),
+        document.getElementById("flag_cronometro"),
+        false, null, 100,
+        document.getElementById("tiempos_parciales"))
 
     Chrono.start.addEventListener("click", (evt) => {
 
@@ -33,39 +34,10 @@ function iniciaCronometro() {
 
 function activarCrono(aux_chrono) {
 
-    /**
-    auxiliar para el display del tiempo.
-    en caso de que las unidades sean >10, añadirá un 0 delante
-    [0]==horas
-    [1]==minutos
-    [2]==segundos
-    [3]==milisegundos
-    */
+    aux_chrono.sumaSegundos()
+    aux_chrono.menorQue10()
 
-    var aux_time = ["", "", "", ""]
-
-    aux_chrono.msec++
-    if (aux_chrono.msec > 9) {
-        aux_chrono.sec++
-        aux_chrono.msec = 0
-        if (aux_chrono.sec > 59) {
-            aux_chrono.min++
-            aux_chrono.sec = 0
-            if (aux_chrono.min > 59) {
-                aux_chrono.hour++
-                aux_chrono.min = 0
-            }
-        }
-
-    }
-
-
-    aux_chrono.msec >= 10 ? aux_time[3] = aux_chrono.msec : aux_time[3] = "0" + aux_chrono.msec
-    aux_chrono.sec >= 10 ? aux_time[2] = aux_chrono.sec : aux_time[2] = "0" + aux_chrono.sec
-    aux_chrono.min >= 10 ? aux_time[1] = aux_chrono.min : aux_time[1] = "0" + aux_chrono.min
-    aux_chrono.hour >= 10 ? aux_time[0] = aux_chrono.hour : aux_time[0] = "0" + aux_chrono.hour
-
-    aux_chrono.time.innerHTML = aux_time[0] + ":" + aux_time[1] + ":" + aux_time[2] + ":" + aux_time[3]
+    aux_chrono.time.innerHTML = aux_chrono.aux_hour + ":" + aux_chrono.aux_min + ":" + aux_chrono.aux_sec + ":" + aux_chrono.aux_msec
 }
 
 function tiempoVuelta(flagChrono) {

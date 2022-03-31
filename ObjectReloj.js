@@ -1,11 +1,8 @@
-function ObjectReloj() {
-    class reloj {
-        constructor(time, date, hour, min, sec, intervalClock) {
-            this.time = time
+function ObjectReloj(Timer) {
+    class reloj extends Timer {
+        constructor(hour, min, sec, msec, time, aux_hour, aux_min, aux_sec, aux_msec, date, intervalClock) {
+            super(hour, min, sec, msec, time, aux_hour, aux_min, aux_sec, aux_msec)
             this.date = date
-            this.hour = hour
-            this.min = min
-            this.sec = sec
             this.intervalClock = intervalClock
         }
         setDate() {

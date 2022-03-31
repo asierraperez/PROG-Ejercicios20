@@ -1,17 +1,14 @@
-function iniciaTemporizador() {
+function iniciaTemporizador(temp_time) {
 
-    const Temporizer = ObjectTemporizer()
+    const Temporizer = ObjectTemporizer(temp_time)
 
-    var temp = new Temporizer(document.getElementById("start_temporizador"),
+    var temp = new Temporizer(0, 0, 0, 0,
+        document.getElementById("text_temporizador"),
+        "", "", "", "",
+        document.getElementById("start_temporizador"),
         document.getElementById("stop_temporizador"),
         document.getElementById("restart_temporizador"),
-        false,
-        document.getElementById("text_temporizador"), 0, 0, 0, 0, null, 0, null)
-    /*var inicio_Temp = 
-    var stop_temp = 
-    var reset_temp = 
-    var tiempo_temp = document.getElementById("text_temporizador")
-    var stop_pulsado = false*/
+        false, null, 0, null)
 
     temp.start.addEventListener("click", (evt) => {
         evt.currentTarget.disabled = true
@@ -24,27 +21,15 @@ function iniciaTemporizador() {
             temp.stopPressed = false
         }
 
-        /**
-    auxiliar para el display del tiempo.
-    en caso de que las unidades sean >10, añadirá un 0 delante
-    [0]==horas
-    [1]==minutos
-    [2]==segundos
-    [3]==milisegundos
-    */
-        var aux_time = ["", "", "", ""]
-        //var tiempo_ms = (horas * 3600 * 1000) + (min * 60 * 1000) + (seg * 1000)
         temp.calcularTimeoutTime()
         console.log(temp.timeoutTime)
 
         temp.intervalTemporizer = setInterval(int_temporizador, 1000, temp)
         temp.timeoutTemporizer = setTimeout(activarTemporizador, temp.timeoutTime, temp)
 
-        temp.sec >= 10 ? aux_time[2] = temp.sec : aux_time[2] = "0" + temp.sec
-        temp.min >= 10 ? aux_time[1] = temp.min : aux_time[1] = "0" + temp.min
-        temp.hour >= 10 ? aux_time[0] = temp.hour : aux_time[0] = "0" + temp.hour
+        temp.menorQue10()
+        temp.time.innerHTML = temp.aux_hour + ":" + temp.aux_min + ":" + temp.aux_sec
 
-        temp.time.innerHTML = aux_time[0] + ":" + aux_time[1] + ":" + aux_time[2]
         if (temp.time.innerHTML == "00:00:00") {
             temp.stop.disabled = true
         }
@@ -90,34 +75,9 @@ function activarTemporizador(tiempo) {
 
 function int_temporizador(tiempo) {
 
-    /**
-        auxiliar para el display del tiempo.
-        en caso de que las unidades sean >10, añadirá un 0 delante
-        [0]==horas
-        [1]==minutos
-        [2]==segundos
-        [3]==milisegundos
-        */
-    var aux_time = ["", "", "", ""]
+    tiempo.RestarSegundos()
+    tiempo.menorQue10()
 
-    if (tiempo.sec != 0) {
-        tiempo.sec--
-    } else {
-        if (tiempo.min == 0) {
-            tiempo.hour--
-            tiempo.min = 59
-
-        } else {
-            tiempo.min--
-
-        }
-        tiempo.sec = 59
-    }
-
-    tiempo.sec >= 10 ? aux_time[2] = tiempo.sec : aux_time[2] = "0" + tiempo.sec
-    tiempo.min >= 10 ? aux_time[1] = tiempo.min : aux_time[1] = "0" + tiempo.min
-    tiempo.hour >= 10 ? aux_time[0] = tiempo.hour : aux_time[0] = "0" + tiempo.hour
-
-    tiempo.time.innerHTML = aux_time[0] + ":" + aux_time[1] + ":" + aux_time[2]
+    tiempo.time.innerHTML = tiempo.aux_hour + ":" + tiempo.aux_min + ":" + tiempo.aux_sec
 
 }

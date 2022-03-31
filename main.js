@@ -44,17 +44,18 @@ function botones() {
 function activarReloj(reloj) {
 
     reloj.setDate()
-    reloj.time.innerHTML = reloj.hour + ":" + reloj.min + ":" + reloj.sec;
+    reloj.menorQue10()
+    reloj.time.innerHTML = reloj.aux_hour + ":" + reloj.aux_min + ":" + reloj.aux_sec;
 
 }
 
-function crearIntervaloReloj() {
+function crearIntervaloReloj(Timer) {
 
-    const clock = ObjectReloj()
+    const clock = ObjectReloj(Timer)
 
 
-    const clk = new clock(document.getElementById("text_reloj"),
-        null, 0, 0, 0, null)
+    const clk = new clock(0, 0, 0, 0, document.getElementById("text_reloj"),
+        "", "", "", "", null, null)
     clk.intervalClock = setInterval(activarReloj, 1000, clk);
 }
 
@@ -71,16 +72,17 @@ function __main__() {
     //Vamos a utilizar el objeto "window" para establecer las variables de los intervalos y temporizadores de forma global
     //Y no tener que utilizar parámetros para enviar o recibirlas, pues puede acabar liándonos en estos ejercicos.
 
-    window.intervalo_reloj = null;
+    //window.intervalo_reloj = null;
     //window.intervalo_cronometro = null;
     //window.temporizador_temporizador = null;
     //window.intervalo_temporizador = null;
 
     //AQUI LAS LLAMADAS A CREACIÓN DE INTERVALOS
+    const Timer = objectTiempo()
 
-    crearIntervaloReloj(); //Como es un reloj, no haría falta detener el intervalo, pero se crea el método stopIntervaloReloj, por se acaso
-    iniciaCronometro()
-    iniciaTemporizador()
+    crearIntervaloReloj(Timer); //Como es un reloj, no haría falta detener el intervalo, pero se crea el método stopIntervaloReloj, por se acaso
+    iniciaCronometro(Timer)
+    iniciaTemporizador(Timer)
 
 }
 
