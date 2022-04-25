@@ -2,63 +2,66 @@
   Esta función sirve para hacer la precarga de la página, ocultando los apartados que no son necesarios o cargando los que si
 */
 function preload() {
-    ocultarNoUsados();
-    selectoresTemporizador();
+    hidNonUsed();
+    selectorsTemporizer();
 }
 
-function ocultarNoUsados() {
+function hidNonUsed() {
     //Variables para almacenar los elementos HTML
-    var reloj, cronometro, temporizador;
-    reloj = document.getElementById("reloj");
-    cronometro = document.getElementById("cronometro");
-    temporizador = document.getElementById("temporizador");
+    var clock, chronometer, temporizer;
+    clock = document.getElementById("Clock");
+    chronometer = document.getElementById("Chronometer");
+    temporizer = document.getElementById("Temporizer");
 
     //Variables para comprobar que elementos deben ocultarse o si es la primera vez que se inicia
-    var esReloj, esCronometro, esTemporizador;
-    esReloj = localStorage.getItem("esReloj");
-    esCronometro = localStorage.getItem("esCronometro");
-    esTemporizador = localStorage.getItem("esTemporizador");
+    var isClock, isChronometer, isTemporizer;
+    isClock = localStorage.getItem("isClock");
+    isClock = parseInt(isClock)
+    isChronometer = localStorage.getItem("isChronometer");
+    isChronometer = parseInt(isChronometer)
+    isTemporizer = localStorage.getItem("isTemporizer");
+    isTemporizer = parseInt(isTemporizer)
 
-    if (esReloj == null && esCronometro == null && esTemporizador == null) {
-        esReloj = 1;
-        esCronometro = 0;
-        esTemporizador = 0;
-        localStorage.setItem("esReloj", esReloj);
-        localStorage.setItem("esCronometro", esCronometro);
-        localStorage.setItem("esTemporizador", esTemporizador);
+    if (isClock == null && isChronometer == null && isTemporizer == null) {
+        isClock = 1;
+        isChronometer = 0;
+        isTemporizer = 0;
+        localStorage.setItem("isClock", isClock);
+        localStorage.setItem("isChronometer", isChronometer);
+        localStorage.setItem("isTemporizer", isTemporizer);
     }
 
-    if (esReloj != 1) {
-        reloj.hidden = true;
+    if (isClock == 1) {
+        clock.style.display = "block";
     } else {
-        reloj.hidden = false;
+        clock.style.display = "none";
     }
-    if (esCronometro != 1) {
-        cronometro.hidden = true;
+    if (isChronometer == 1) {
+        chronometer.style.display = "block";
     } else {
-        cronometro.hidden = false;
+        chronometer.style.display = "none";
     }
-    if (esTemporizador != 1) {
-        temporizador.hidden = true;
+    if (isTemporizer == 1) {
+        temporizer.style.display = "block";
     } else {
-        temporizador.hidden = false;
+        temporizer.style.display = "none";
     }
 }
 
-function selectoresTemporizador() {
-    var horas_temporizador = document.getElementById("horas_temporizador");
+function selectorsTemporizer() {
+    var hoursTemporizer = document.getElementById("hoursTemporizer");
     for (var i = 0; i <= 24; i++) {
         var option = new Option(i, i, false, false);
-        horas_temporizador.appendChild(option);
+        hoursTemporizer.appendChild(option);
     }
-    var minutos_temporizador = document.getElementById("minutos_temporizador");
+    var minsTemporizer = document.getElementById("minsTemporizer");
     for (var i = 0; i <= 60; i++) {
         var option = new Option(i, i, false, false);
-        minutos_temporizador.appendChild(option);
+        minsTemporizer.appendChild(option);
     }
-    var segundos_temporizador = document.getElementById("segundos_temporizador");
+    var secsTemporizer = document.getElementById("secsTemporizer");
     for (var i = 0; i <= 60; i++) {
         var option = new Option(i, i, false, false);
-        segundos_temporizador.appendChild(option);
+        secsTemporizer.appendChild(option);
     }
 }

@@ -1,13 +1,13 @@
-function iniciaTemporizador(temp_time) {
+function iniciaTemporizador() {
 
-    const Temporizer = ObjectTemporizer(temp_time)
+    //const Temporizer = ObjectTemporizer(temp_time)
 
     var temp = new Temporizer(0, 0, 0, 0,
-        document.getElementById("text_temporizador"),
+        document.getElementById("textTemporizer"),
         "", "", "", "",
-        document.getElementById("start_temporizador"),
-        document.getElementById("stop_temporizador"),
-        document.getElementById("restart_temporizador"),
+        document.getElementById("startTemporizer"),
+        document.getElementById("stopTemporizer"),
+        document.getElementById("restartTemporizer"),
         false, null, 0, null)
 
     temp.start.addEventListener("click", (evt) => {
@@ -15,20 +15,20 @@ function iniciaTemporizador(temp_time) {
         temp.stop.disabled = false
         temp.reset.disabled = false
         if (!temp.stopPressed) {
-            temp.hour = document.getElementById("horas_temporizador").value
-            temp.min = document.getElementById("minutos_temporizador").value
-            temp.sec = document.getElementById("segundos_temporizador").value
+            temp.hour = document.getElementById("hoursTemporizer").value
+            temp.min = document.getElementById("minsTemporizer").value
+            temp.sec = document.getElementById("secsTemporizer").value
             temp.stopPressed = false
         }
 
-        temp.calcularTimeoutTime()
+        temp.calculateTimeoutTime()
         console.log(temp.timeoutTime)
 
-        temp.intervalTemporizer = setInterval(int_temporizador, 1000, temp)
-        temp.timeoutTemporizer = setTimeout(activarTemporizador, temp.timeoutTime, temp)
+        temp.intervalTemporizer = setInterval(activateTemporizer, 1000, temp)
+        temp.timeoutTemporizer = setTimeout(countTime, temp.timeoutTime, temp)
 
         temp.menorQue10()
-        temp.time.innerHTML = temp.aux_hour + ":" + temp.aux_min + ":" + temp.aux_sec
+        temp.time.innerHTML = temp.auxHour + ":" + temp.auxMin + ":" + temp.auxSec
 
         if (temp.time.innerHTML == "00:00:00") {
             temp.stop.disabled = true
@@ -65,19 +65,19 @@ function iniciaTemporizador(temp_time) {
 
 }
 
-function activarTemporizador(tiempo) {
+function countTime(temporizer) {
     alert("El temporizador ha terminado")
-    clearInterval(tiempo.intervalTemporizer)
-    clearTimeout(tiempo.timeoutTemporizer)
+    clearInterval(temporizer.intervalTemporizer)
+    clearTimeout(temporizer.timeoutTemporizer)
 
-    tiempo.time.innerHTML = "00:00:00"
+    temporizer.time.innerHTML = "00:00:00"
 }
 
-function int_temporizador(tiempo) {
+function activateTemporizer(temporizer) {
 
-    tiempo.RestarSegundos()
-    tiempo.menorQue10()
+    temporizer.subtractSeconds()
+    temporizer.lowerThan10()
 
-    tiempo.time.innerHTML = tiempo.aux_hour + ":" + tiempo.aux_min + ":" + tiempo.aux_sec
+    temporizer.time.innerHTML = temporizer.auxHour + ":" + temporizer.auxMin + ":" + temporizer.auxSec
 
 }

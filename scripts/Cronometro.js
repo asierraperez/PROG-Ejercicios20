@@ -1,14 +1,12 @@
-function iniciaCronometro(chrono_time) {
-
-    const Chronometer = ObjectChronometer(chrono_time)
+function iniciaCronometro() {
 
     const Chrono = new Chronometer(0, 0, 0, 0,
-        document.getElementById("text_cronometro"),
+        document.getElementById("textChronometer"),
         "", "", "", "",
-        document.getElementById("start_cronometro"),
-        document.getElementById("flag_cronometro"),
+        document.getElementById("startChronometer"),
+        document.getElementById("flagChronometer"),
         false, null, 100,
-        document.getElementById("tiempos_parciales"))
+        document.getElementById("partialTimes"))
 
     Chrono.start.addEventListener("click", (evt) => {
 
@@ -17,7 +15,7 @@ function iniciaCronometro(chrono_time) {
             Chrono.flag.disabled = false
             Chrono.startPressed = true
             Chrono.start.innerHTML = "Pausar"
-            Chrono.intervalChrono = window.setInterval(activarCrono, Chrono.intervalTime, Chrono)
+            Chrono.intervalChrono = window.setInterval(activateCrono, Chrono.intervalTime, Chrono)
         } else {
             evt.currentTarget.style.backgroundColor = "chartreuse"
             Chrono.flag.disabled = true
@@ -27,20 +25,20 @@ function iniciaCronometro(chrono_time) {
         }
     })
     Chrono.flag.addEventListener("click", (evt) => {
-        tiempoVuelta(Chrono)
+        flagTime(Chrono)
     })
 
 }
 
-function activarCrono(aux_chrono) {
+function activateCrono(auxChrono) {
 
-    aux_chrono.sumaSegundos()
-    aux_chrono.menorQue10()
+    auxChrono.addSeconds()
+    auxChrono.lowerThan10()
 
-    aux_chrono.time.innerHTML = aux_chrono.aux_hour + ":" + aux_chrono.aux_min + ":" + aux_chrono.aux_sec + ":" + aux_chrono.aux_msec
+    auxChrono.time.innerHTML = auxChrono.auxHour + ":" + auxChrono.auxMin + ":" + auxChrono.auxSec + ":" + auxChrono.auxMsec
 }
 
-function tiempoVuelta(flagChrono) {
+function flagTime(flagChrono) {
 
     flagChrono.timeFlag = flagChrono.time.innerHTML
     flagChrono.timeList.innerHTML = flagChrono.timeList.innerHTML + "<li/>" + flagChrono.timeFlag

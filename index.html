@@ -13,46 +13,46 @@
 <body>
     <div id="grid">
         <div id="cambio">
-            <button class="boton" id="activar_reloj"><img src="./images/reloj.png" alt="Reloj"> Reloj</button>
+            <button class="boton" id="activateClock"><img src="./images/reloj.png" alt="Reloj"> Reloj</button>
             <br>
             <br>
-            <button class="boton" id="activar_cronometro"><img src="./images/crono.png" alt="Cronómetro">
+            <button class="boton" id="activateChronometer"><img src="./images/crono.png" alt="Cronómetro">
                 Cronómetro</button>
             <br>
             <br>
-            <button class="boton" id="activar_temporizador"><img src="./images/temporizador.png" alt="Temporizador">
+            <button class="boton" id="activateTemporizer"><img src="./images/temporizador.png" alt="Temporizador">
                 Temporizador</button>
             <br>
             <br>
         </div>
         <div id="funciones">
-            <div id="reloj" hidden>
+            <div id="Clock" hidden>
                 <p>Reloj</p>
-                <p id="text_reloj">00:00:00</p>
+                <p id="textClock">00:00:00</p>
             </div>
-            <div id="cronometro" hidden>
+            <div id="Chronometer" hidden>
                 <div>
                     <p>Cronómetro</p>
-                    <p id="text_cronometro">00:00:00:00</p>
-                    <button class="start" id="start_cronometro">Start</button>
-                    <button class="stop" id="flag_cronometro" disabled>Flag</button>
+                    <p id="textChronometer">00:00:00:00</p>
+                    <button class="start" id="startChronometer">Start</button>
+                    <button class="stop" id="flagChronometer" disabled>Flag</button>
                 </div>
                 <div>
-                    <ul id="tiempos_parciales"></ul>
+                    <ul id="partialTimes"></ul>
                 </div>
 
 
             </div>
-            <div id="temporizador" hidden>
+            <div id="Temporizer" hidden>
                 <p>Temporizador</p>
-                <p id="text_temporizador">00:00:00</p>
-                <select id="horas_temporizador"></select> <select id="minutos_temporizador"></select> <select
-                    id="segundos_temporizador"></select>
+                <p id="textTemporizer">00:00:00</p>
+                <select id="hoursTemporizer"></select> <select id="minsTemporizer"></select> <select
+                    id="secsTemporizer"></select>
                 <br>
                 <br>
-                <button class="start" id="start_temporizador">Start</button> <button class="stop" id="stop_temporizador"
+                <button class="start" id="startTemporizer">Start</button> <button class="stop" id="stopTemporizer"
                     disabled>Stop</button>
-                <button class="restart" id="restart_temporizador" disabled>Restart</button>
+                <button class="restart" id="restartTemporizer" disabled>Restart</button>
             </div>
         </div>
     </div>
