@@ -52,9 +52,9 @@ function iniciaTemporizador() {
         temp.stopPressed = false
         clearInterval(temp.intervalTemporizer)
         clearTimeout(temp.timeoutTemporizer)
-        document.getElementById("horas_temporizador").value = 0
-        document.getElementById("minutos_temporizador").value = 0
-        document.getElementById("segundos_temporizador").value = 0
+        document.getElementById("hoursTemporizer").value = 0
+        document.getElementById("minsTemporizer").value = 0
+        document.getElementById("secsTemporizer").value = 0
         temp.hour = 0
         temp.min = 0
         temp.sec = 0
