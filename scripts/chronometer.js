@@ -1,12 +1,20 @@
-function iniciaCronometro(MAXDIGITCHRONO, MAXUNITCHRONO) {
-
+/**
+ * Gestión del cronómetro
+ * @param {number} MAXDIGITCHRONO - digito máximo para visualizacion
+ * @param {Array} MAXUNITCHRONO - Unidades máximas, - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+ */
+function initiateCronometro(MAXDIGITCHRONO, MAXUNITCHRONO) {
+    /**
+     * funciones y atributos intrinsecos al cronómetro
+     * @type {object}
+     */
     const Chrono = new Chronometer(0, 0, 0, 0,
         document.getElementById("textChronometer"),
         "", "", "", "",
         document.getElementById("startChronometer"),
         document.getElementById("flagChronometer"),
         false, null, 100,
-        document.getElementById("partialTimes"))
+        document.getElementById("partialTimes"), "")
 
     Chrono.start.addEventListener("click", (evt) => {
 
@@ -29,7 +37,12 @@ function iniciaCronometro(MAXDIGITCHRONO, MAXUNITCHRONO) {
     })
 
 }
-
+/**
+ * Activación del cronómetro
+ * @param {object} auxChrono - funciones y atributos intrinsecos al cronómetro
+ * @param {number} MAXDIGITCHRONO - digito máximo para visualizacion
+ * @param {Array} MAXUNITCHRONO - Unidades máximas, - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+ */
 function activateCrono(auxChrono, MAXDIGITCHRONO, MAXUNITCHRONO) {
 
     auxChrono.addSeconds(MAXUNITCHRONO[0], MAXUNITCHRONO[1], MAXUNITCHRONO[2])
@@ -37,7 +50,10 @@ function activateCrono(auxChrono, MAXDIGITCHRONO, MAXUNITCHRONO) {
 
     auxChrono.time.innerHTML = auxChrono.auxHour + ":" + auxChrono.auxMin + ":" + auxChrono.auxSec + ":" + auxChrono.auxMsec
 }
-
+/**
+ * creación de tiempos de vuelta
+ * @param {object} flagChrono - funciones y atributos intrinsecos al cronómetro
+ */
 function flagTime(flagChrono) {
 
     flagChrono.timeFlag = flagChrono.time.innerHTML

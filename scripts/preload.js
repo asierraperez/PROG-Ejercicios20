@@ -1,19 +1,29 @@
-/*
-  Esta función sirve para hacer la precarga de la página, ocultando los apartados que no son necesarios o cargando los que si
-*/
+
+/**
+ * Esta función sirve para hacer la precarga de la página, ocultando los apartados que no son necesarios o cargando los que si
+ */
 function preload() {
     hidNonUsed();
     selectorsTemporizer();
 }
 
+/**
+ * Ocultar elementos no usados
+ */
 function hidNonUsed() {
-    //Variables para almacenar los elementos HTML
+    /**
+     * Variables para almacenar los elementos HTML
+     * @type {DOMImplementation}
+     */
     var clock, chronometer, temporizer;
     clock = document.getElementById("Clock");
     chronometer = document.getElementById("Chronometer");
     temporizer = document.getElementById("Temporizer");
 
-    //Variables para comprobar que elementos deben ocultarse o si es la primera vez que se inicia
+    /**
+     * Variables para comprobar que elementos deben ocultarse o si es la primera vez que se inicia
+     * @type {number}
+     */
     var isClock, isChronometer, isTemporizer;
     isClock = localStorage.getItem("isClock");
     isClock = parseInt(isClock)
@@ -47,18 +57,32 @@ function hidNonUsed() {
         temporizer.style.display = "none";
     }
 }
-
+/**
+ * Crea las opciones para seleccionar en el temporizador
+ */
 function selectorsTemporizer() {
+    /**
+     * selector de horas a temporizar
+     * @type {DOMImplementation}
+     */
     var hoursTemporizer = document.getElementById("hoursTemporizer");
     for (var i = 0; i <= 24; i++) {
         var option = new Option(i, i, false, false);
         hoursTemporizer.appendChild(option);
     }
+    /**
+     * selector de minutos a temporizar
+     * @type {DOMImplementation}
+     */
     var minsTemporizer = document.getElementById("minsTemporizer");
     for (var i = 0; i <= 60; i++) {
         var option = new Option(i, i, false, false);
         minsTemporizer.appendChild(option);
     }
+    /**
+     * selector de segundos a temporizar
+     * @type {DOMImplementation}
+     */
     var secsTemporizer = document.getElementById("secsTemporizer");
     for (var i = 0; i <= 60; i++) {
         var option = new Option(i, i, false, false);

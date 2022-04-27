@@ -1,6 +1,6 @@
-/*
-Reset se crea aquí por se una función específica, pues hará que los valores de los relojes vuelvan a por defecto
-*/
+/**
+ * Reset se crea aquí por se una función específica, pues hará que los valores de los relojes vuelvan a por defecto
+ */
 function reset() {
     var fecha = new Date();
     document.getElementById("textClock").innerHTML = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
@@ -8,10 +8,16 @@ function reset() {
     document.getElementById("textTemporizer").innerHTML = "00:00:00";
 }
 
-/*
-Permite crear el evento que muestre el primer argumento y oculte los otros dos
-*/
+/**
+ * Permite crear el evento que muestre el primer argumento y oculte los otros dos
+ * @param {DOMImplementation} show - Elemento a mostrar
+ * @param {DOMImplementation} hide1 - Primer elemento a ocultar
+ * @param {DOMImplementation} hide2 - Segundo elemento a ocultar
+ */
 function eventActivate(show, hide1, hide2) {
+    /**
+     * elementos a mostrar u ocultar
+     */
     var divShow, divHide1, divHide2;
 
     divShow = document.getElementById(show.id.split("activate")[1]);
@@ -29,6 +35,10 @@ function eventActivate(show, hide1, hide2) {
 
 }
 
+/**
+ * Guarda la fúltima función usada en localstorage
+ * @param {DOMImplementation} functionName - Funcion del reloj a guardar en Localstorage
+ */
 function saveDivShown(functionName) {
     var isClock, isChronometer, isTemporizer;
     if (functionName == "Clock") {
@@ -52,10 +62,15 @@ function saveDivShown(functionName) {
     localStorage.setItem("isTemporizer", isTemporizer);
 }
 
-/* 
-Función para establecer la funcionalidad de los botones
-*/
-function botones() {
+
+/**
+ * Función para establecer la funcionalidad de los botones
+ */
+function buttons() {
+    /**
+     * botones de cada función del documento
+     * @type {DOMImplementation}
+     */
     var activateClock, activateChronometer, activateTemporizer;
     activateClock = document.getElementById("activateClock");
     activateChronometer = document.getElementById("activateChronometer");
@@ -65,6 +80,11 @@ function botones() {
     eventActivate(activateTemporizer, activateChronometer, activateClock);
 }
 
+/**
+ * Activación del intervalo del Reloj
+ * @param {object} act_clock - funciones y atributos del reloj
+ * @param {number} MAXNUM - digito máximo para visualización, 10
+ */
 function activateClock(act_clock, MAXNUM) {
 
     act_clock.setDate()
@@ -73,44 +93,74 @@ function activateClock(act_clock, MAXNUM) {
 
 }
 
-function crearIntervaloReloj(MAXNUM) {
-
-    //const clock = ObjectReloj(Timer)
-
-
+/**
+ * Gestión del reloj
+ * @param {number} MAXNUM - digito máximo para visualización, 10
+ */
+function initiateClock(MAXNUM) {
+    /**
+     * Funciones y atributos del reloj
+     * @type {object}
+     */
     const clk = new Clock(0, 0, 0, 0, document.getElementById("textClock"),
         "", "", "", "", null, null)
     clk.intervalClock = setInterval(activateClock, 1000, clk, MAXNUM);
 }
 
-function stopIntervalClock(reloj) {
-    clearInterval(reloj.intervalClock);
+/**
+ * detener intervalo del reloj 
+ * @param {object} stop_clock - Funciones y atributos del reloj
+ */
+function stopIntervalClock(stop_clock) {
+    clearInterval(stop_clock.intervalClock);
 }
 
+/**
+ * Reloj multifunción
+ */
 function __main__() {
 
     preload(); //preload debe ser una función puramente gráfica, no funcional generalmente
     reset();
-    botones();
-
+    buttons();
+    /**
+     * digito máximo para visualizacion
+     * @type {number}
+     */
     const MAXDIGIT = 10
+    /**
+     * milisegundos maximos por segundo
+     * @type {number}
+     */
     const MSECSECONDS = 1000
+    /**
+     * segundos maximos por minuto
+     * @type {number}
+     */
     const SECONDSMINUTE = 60
+    /**
+     * minutos maximos por hora
+     * @type {number}
+     */
     const MINUTESHOUR = 60
+    /**
+     * segundos maximos por hora
+     * @type {number}
+     */
     const SECONDSHOUR = 3600
     /**
      * Unidades máximas,
      * [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
-     * @type {Array[number]}
+     * @type {Array}
      */
     const MAXUNIT = [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
 
     //AQUI LAS LLAMADAS A CREACIÓN DE INTERVALOS
     //const Timer = objectTiempo()
 
-    crearIntervaloReloj(MAXDIGIT); //Como es un reloj, no haría falta detener el intervalo, pero se crea el método stopIntervaloReloj, por se acaso
-    iniciaCronometro(MAXDIGIT, MAXUNIT)
-    iniciaTemporizador(MAXDIGIT, MAXUNIT)
+    initiateClock(MAXDIGIT); //Como es un reloj, no haría falta detener el intervalo, pero se crea el método stopIntervaloReloj, por se acaso
+    initiateCronometro(MAXDIGIT, MAXUNIT)
+    initiateTemporizador(MAXDIGIT, MAXUNIT)
 
 }
 

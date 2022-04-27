@@ -1,12 +1,13 @@
 /**
  * Gestión del temporizador
- * @param {Array [number] } MAXDIGITTEMP - Unidades máximas; - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+ * @param {Array} MAXDIGITTEMP - Unidades máximas; - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
  * @param {number} MAXUNITTEMP - digito máximo para visualización, 10
  */
-function iniciaTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
-
-    //const Temporizer = ObjectTemporizer(temp_time)
-
+function initiateTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
+    /**
+     * funciones y atributos intrínsecos al temporizador
+     * @type {object}
+     */
     var temp = new Temporizer(0, 0, 0, 0,
         document.getElementById("textTemporizer"),
         "", "", "", "",
@@ -69,7 +70,10 @@ function iniciaTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
 
 
 }
-
+/**
+ * alarma para cuando termina la cuenta atrás
+ * @param {object} temporizer - Datos y funciones intrínsecas al temporizador
+ */
 function countTime(temporizer) {
     alert("El temporizador ha terminado")
     clearInterval(temporizer.intervalTemporizer)
@@ -78,11 +82,11 @@ function countTime(temporizer) {
     temporizer.time.innerHTML = "00:00:00"
 }
 /**
- * 
+ * Gestión del temporizador
  * @param {object} temporizer - Datos y funciones intrínsecas al temporizador
- * @param {*} MAXDIGITTEMP - Unidades máximas; 
+ * @param {*} MAXDIGITTEMP - digito máximo para visualización, 10
+ * @param {*} MAXUNITTEMP - Unidades máximas; 
  * - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
- * @param {*} MAXUNITTEMP - digito máximo para visualización, 10
  */
 function activateTemporizer(temporizer, MAXDIGITTEMP, MAXUNITTEMP) {
 
