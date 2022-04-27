@@ -21,10 +21,7 @@ function initiateTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
         temp.stop.disabled = false
         temp.reset.disabled = false
         if (!temp.stopPressed) {
-            temp.hour = document.getElementById("hoursTemporizer").value
-            temp.min = document.getElementById("minsTemporizer").value
-            temp.sec = document.getElementById("secsTemporizer").value
-            temp.stopPressed = false
+            getTime(temp)
         }
 
         temp.calculateTimeoutTime(MAXUNITTEMP[3], MAXUNITTEMP[1], MAXUNITTEMP[0])
@@ -53,19 +50,7 @@ function initiateTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
 
     temp.reset.addEventListener("click", (evt) => {
         evt.currentTarget.disabled = true
-        temp.stop.disabled = true
-        temp.start.disabled = false
-        temp.stopPressed = false
-        clearInterval(temp.intervalTemporizer)
-        clearTimeout(temp.timeoutTemporizer)
-        document.getElementById("hoursTemporizer").value = 0
-        document.getElementById("minsTemporizer").value = 0
-        document.getElementById("secsTemporizer").value = 0
-        temp.hour = 0
-        temp.min = 0
-        temp.sec = 0
-        temp.time.innerHTML = "00:00:00"
-
+        resetTemporizer(temp)
     })
 
 
@@ -95,4 +80,34 @@ function activateTemporizer(temporizer, MAXDIGITTEMP, MAXUNITTEMP) {
 
     temporizer.time.innerHTML = temporizer.auxHour + ":" + temporizer.auxMin + ":" + temporizer.auxSec
 
+}
+
+/**
+ * obtener tiempo
+ * @param {object} tempGetTime - Datos y funciones intrínsecas al temporizador
+ */
+function getTime(tempGetTime) {
+    tempGetTime.hour = document.getElementById("hoursTemporizer").value
+    tempGetTime.min = document.getElementById("minsTemporizer").value
+    tempGetTime.sec = document.getElementById("secsTemporizer").value
+    tempGetTime.stopPressed = false
+}
+
+/**
+ * reset del temporzador
+ * @param {object} tempReset - Datos y funciones intrínsecas al temporizador
+ */
+function resetTemporizer(tempReset) {
+    tempReset.stop.disabled = true
+    tempReset.start.disabled = false
+    tempReset.stopPressed = false
+    clearInterval(tempReset.intervalTemporizer)
+    clearTimeout(tempReset.timeoutTemporizer)
+    document.getElementById("hoursTemporizer").value = 0
+    document.getElementById("minsTemporizer").value = 0
+    document.getElementById("secsTemporizer").value = 0
+    tempReset.hour = 0
+    tempReset.min = 0
+    tempReset.sec = 0
+    tempReset.time.innerHTML = "00:00:00"
 }
