@@ -5,11 +5,11 @@
 
  */
 class chronoHandler {
-    constructor(MAXDIGITCHRONO, MAXUNITCHRONO, view) {
+    constructor(MAXDIGITCHRONO, MAXUNITCHRONO, viewChrono) {
 
         this.MAXDIGITCHRONO = MAXDIGITCHRONO
         this.MAXUNITCHRONO = MAXUNITCHRONO
-        this.view = view
+        this.viewChrono = viewChrono
         this.i = 0
 
         this.chrono = new Chronometer(0, 0, 0, 0,
@@ -23,7 +23,7 @@ class chronoHandler {
 
     }
     eventStart() {
-        this.view.startChrono.addEventListener("click", (evt) => {
+        this.viewChrono.startChrono.addEventListener("click", (evt) => {
 
             if (!this.chrono.startPressed) {
                 this.startChrno()
@@ -31,20 +31,20 @@ class chronoHandler {
                 this.stopChrono()
             }
         })
-        this.view.flagChrono.addEventListener("click", (evt) => {
+        this.viewChrono.flagChrono.addEventListener("click", (evt) => {
             this.flagTime()
         })
     }
 
     startChrno() {
         this.startToStop()
-        this.chrono.intervalChrono = window.setInterval(this.activateCrono, this.chrono.intervalTime, this.chrono, this.MAXUNITCHRONO, this.MAXDIGITCHRONO, this.view)
+        this.chrono.intervalChrono = window.setInterval(this.activateCrono, this.chrono.intervalTime, this.chrono, this.MAXUNITCHRONO, this.MAXDIGITCHRONO, this.viewChrono)
     }
     startToStop() {
-        this.view.startChrono.style.backgroundColor = "firebrick"
-        this.view.flagChrono.disabled = false
+        this.viewChrono.startChrono.style.backgroundColor = "firebrick"
+        this.viewChrono.flagChrono.disabled = false
         this.chrono.startPressed = true
-        this.view.startChrono.innerHTML = "Pausar"
+        this.viewChrono.startChrono.innerHTML = "Pausar"
     }
 
 
@@ -62,15 +62,15 @@ class chronoHandler {
         clearInterval(this.chrono.intervalChrono)
     }
     stopToStart() {
-        this.view.startChrono.style.backgroundColor = "chartreuse"
-        this.view.flagChrono.disabled = true
+        this.viewChrono.startChrono.style.backgroundColor = "chartreuse"
+        this.viewChrono.flagChrono.disabled = true
         this.chrono.startPressed = false
-        this.view.startChrono.innerHTML = "Start"
+        this.viewChrono.startChrono.innerHTML = "Start"
     }
     flagTime() {
 
-        this.chrono.timeList[this.i] = this.view.textCronometer.innerHTML
-        this.view.partialTimes.innerHTML = this.view.partialTimes.innerHTML + "<li/>" + this.view.textCronometer.innerHTML
+        this.chrono.timeList[this.i] = this.viewChrono.textCronometer.innerHTML
+        this.viewChrono.partialTimes.innerHTML = this.viewChrono.partialTimes.innerHTML + "<li/>" + this.viewChrono.textCronometer.innerHTML
         this.i++
     }
 

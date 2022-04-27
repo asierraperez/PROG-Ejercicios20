@@ -26,6 +26,10 @@ class View {
         this.flagChrono = document.getElementById("flagChronometer")
         //lista tiempos parciales
         this.partialTimes = document.getElementById("partialTimes")
+        //botones temporizador
+        this.startTemporizer = document.getElementById("startTemporizer")
+        this.stopTemporizer = document.getElementById("stopTemporizer")
+        this.restartTemporizer = document.getElementById("restartTemporizer")
 
         preload.hidNonUsed(this.clock, this.chronometer, this.temporizer)
         preload.selectorsTemporizer(this.hoursTemporizer, this.minsTemporizer, this.secsTemporizer)
@@ -36,7 +40,7 @@ class View {
     reset() {
         this.textClock.innerHTML = "00:00:00";
         this.textCronometer.innerHTML = "00:00:00:0";
-        this.textCronometer.innerHTML = "00:00:00";
+        this.textTemporizer.innerHTML = "00:00:00";
     }
 
     buttons() {

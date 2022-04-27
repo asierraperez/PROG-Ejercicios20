@@ -2,24 +2,9 @@
  * objeto temporizer :: funciones y atributos asociados al temporizador de la web
  */
 class Temporizer extends Time {
-    constructor(hour, min, sec, msec, time, aux_hour, aux_min, aux_sec, aux_msec, start, stop, reset, stopPressed,
+    constructor(hour, min, sec, msec, aux_hour, aux_min, aux_sec, aux_msec, stopPressed,
         intervalTime, intervalTemporizer, timeoutTime, timeoutTemporizer) {
-        super(hour, min, sec, msec, time, aux_hour, aux_min, aux_sec, aux_msec)
-        /**
-         * botón de start temporizador
-         * @type {DOMImplementation}
-         */
-        this.start = start
-        /**
-         * boton stop temporizador
-         * @type {DOMImplementation}
-         */
-        this.stop = stop
-        /**
-         * boton reset temporizador
-         * @type {DOMImplementation}
-         */
-        this.reset = reset
+        super(hour, min, sec, msec, aux_hour, aux_min, aux_sec, aux_msec)
         /**
          * control si está pulsado el botón stop
          * @type {Boolean}

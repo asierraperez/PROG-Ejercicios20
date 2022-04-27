@@ -45,6 +45,8 @@ class Controller {
 
         this.chronometer = new chronoHandler(MAXDIGIT, MAXUNIT, this.view)
 
+        this.temporizer = new tempHandler(MAXDIGIT, MAXUNIT, this.view)
+
     }
 
 

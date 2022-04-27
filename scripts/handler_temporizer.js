@@ -3,111 +3,90 @@
  * @param {Array} MAXDIGITTEMP - Unidades máximas; - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
  * @param {number} MAXUNITTEMP - digito máximo para visualización, 10
  */
-function initiateTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
-    /**
-     * funciones y atributos intrínsecos al temporizador
-     * @type {object}
-     */
-    var temp = new Temporizer(0, 0, 0, 0,
-        document.getElementById("textTemporizer"),
-        "", "", "", "",
-        document.getElementById("startTemporizer"),
-        document.getElementById("stopTemporizer"),
-        document.getElementById("restartTemporizer"),
-        false, null, 0, null)
+class tempHandler {
+    constructor(MAXDIGITTEMP, MAXUNITTEMP, viewTemp) {
+        this.MAXDIGITTEMP = MAXDIGITTEMP
+        this.MAXUNITTEMP = MAXUNITTEMP
+        this.viewTemp = viewTemp
 
-    temp.start.addEventListener("click", (evt) => {
-        evt.currentTarget.disabled = true
-        temp.stop.disabled = false
-        temp.reset.disabled = false
-        if (!temp.stopPressed) {
-            getTime(temp)
-        }
+        this.temp = new Temporizer(0, 0, 0, 0,
+            "", "", "", "",
+            false, null, 0, null)
 
-        temp.calculateTimeoutTime(MAXUNITTEMP[3], MAXUNITTEMP[1], MAXUNITTEMP[0])
-        console.log(temp.timeoutTime)
+        this.eventStart()
 
-        temp.intervalTemporizer = setInterval(activateTemporizer, 1000, temp, MAXDIGITTEMP, MAXUNITTEMP)
-        temp.timeoutTemporizer = setTimeout(countTime, temp.timeoutTime, temp)
+    }
+    eventStart() {
+        this.viewTemp.startTemporizer.addEventListener("click", (evt) => {
+            evt.currentTarget.disabled = true
+            this.viewTemp.stopTemporizer.disabled = false
+            this.viewTemp.restartTemporizer.disabled = false
+            if (!this.temp.stopPressed) {
+                this.getTime()
+            }
 
-        temp.lowerThan10(MAXDIGITTEMP)
-        temp.time.innerHTML = temp.auxHour + ":" + temp.auxMin + ":" + temp.auxSec
+            this.temp.calculateTimeoutTime(this.MAXUNITTEMP[3], this.MAXUNITTEMP[1], this.MAXUNITTEMP[0])
+            console.log(this.temp.timeoutTime)
 
-        if (temp.time.innerHTML == "00:00:00") {
-            temp.stop.disabled = true
-        }
-    })
+            this.temp.intervalTemporizer = setInterval(this.activateTemporizer, 1000, this.temp, this.MAXDIGITTEMP, this.MAXUNITTEMP, this.viewTemp)
+            this.temp.timeoutTemporizer = setTimeout(this.countTime, this.temp.timeoutTime, this.temp, this.viewTemp)
 
-    temp.stop.addEventListener("click", (evt) => {
-        evt.currentTarget.disabled = true
-        temp.start.disabled = false
+            this.temp.lowerThan10(this.MAXDIGITTEMP)
+            this.viewTemp.textTemporizer.innerHTML = this.temp.auxHour + ":" + this.temp.auxMin + ":" + this.temp.auxSec
 
-        temp.stopPressed = true
+            if (this.viewTemp.textTemporizer.innerHTML == "00:00:00") {
+                this.viewTemp.stopTemporizer.disabled = true
+            }
+        })
 
-        clearInterval(temp.intervalTemporizer)
-        clearTimeout(temp.timeoutTemporizer)
-    })
+        this.viewTemp.stopTemporizer.addEventListener("click", (evt) => {
+            evt.currentTarget.disabled = true
+            this.viewTemp.startTemporizer.disabled = false
 
-    temp.reset.addEventListener("click", (evt) => {
-        evt.currentTarget.disabled = true
-        resetTemporizer(temp)
-    })
+            this.temp.stopPressed = true
 
+            clearInterval(this.temp.intervalTemporizer)
+            clearTimeout(this.temp.timeoutTemporizer)
+        })
 
-}
-/**
- * alarma para cuando termina la cuenta atrás
- * @param {object} temporizer - Datos y funciones intrínsecas al temporizador
- */
-function countTime(temporizer) {
-    alert("El temporizador ha terminado")
-    clearInterval(temporizer.intervalTemporizer)
-    clearTimeout(temporizer.timeoutTemporizer)
+        this.viewTemp.restartTemporizer.addEventListener("click", (evt) => {
+            evt.currentTarget.disabled = true
+            this.resetTemporizer()
+        })
+    }
+    countTime(temporizer, viewCount) {
+        alert("El temporizador ha terminado")
+        clearInterval(temporizer.intervalTemporizer)
+        clearTimeout(temporizer.timeoutTemporizer)
 
-    temporizer.time.innerHTML = "00:00:00"
-}
-/**
- * Gestión del temporizador
- * @param {object} temporizer - Datos y funciones intrínsecas al temporizador
- * @param {*} MAXDIGITTEMP - digito máximo para visualización, 10
- * @param {*} MAXUNITTEMP - Unidades máximas; 
- * - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
- */
-function activateTemporizer(temporizer, MAXDIGITTEMP, MAXUNITTEMP) {
+        viewCount.textTemporizer.innerHTML = "00:00:00"
+    }
+    activateTemporizer(temporizer, MAXDIGITTEMP, MAXUNITTEMP, actViewTemp) {
 
-    temporizer.subtractSeconds(MAXUNITTEMP[1], MAXUNITTEMP[2])
-    temporizer.lowerThan10(MAXDIGITTEMP)
+        temporizer.subtractSeconds(MAXUNITTEMP[1], MAXUNITTEMP[2])
+        temporizer.lowerThan10(MAXDIGITTEMP)
+        actViewTemp.textTemporizer.innerHTML = temporizer.auxHour + ":" + temporizer.auxMin + ":" + temporizer.auxSec
 
-    temporizer.time.innerHTML = temporizer.auxHour + ":" + temporizer.auxMin + ":" + temporizer.auxSec
+    }
+    getTime() {
+        this.temp.hour = this.viewTemp.hoursTemporizer.value
+        this.temp.min = this.viewTemp.minsTemporizer.value
+        this.temp.sec = this.viewTemp.secsTemporizer.value
+        this.temp.stopPressed = false
+    }
+    resetTemporizer() {
+        this.viewTemp.stopTemporizer.disabled = true
+        this.viewTemp.startTemporizer.disabled = false
+        this.temp.stopPressed = false
+        clearInterval(this.temp.intervalTemporizer)
+        clearTimeout(this.temp.timeoutTemporizer)
+        this.viewTemp.hoursTemporizer.value = 0
+        this.viewTemp.minsTemporizer.value = 0
+        this.viewTemp.secsTemporizer.value = 0
+        this.temp.hour = 0
+        this.temp.min = 0
+        this.temp.sec = 0
+        this.viewTemp.textTemporizer.innerHTML = "00:00:00"
+    }
 
-}
-
-/**
- * obtener tiempo
- * @param {object} tempGetTime - Datos y funciones intrínsecas al temporizador
- */
-function getTime(tempGetTime) {
-    tempGetTime.hour = document.getElementById("hoursTemporizer").value
-    tempGetTime.min = document.getElementById("minsTemporizer").value
-    tempGetTime.sec = document.getElementById("secsTemporizer").value
-    tempGetTime.stopPressed = false
-}
-
-/**
- * reset del temporzador
- * @param {object} tempReset - Datos y funciones intrínsecas al temporizador
- */
-function resetTemporizer(tempReset) {
-    tempReset.stop.disabled = true
-    tempReset.start.disabled = false
-    tempReset.stopPressed = false
-    clearInterval(tempReset.intervalTemporizer)
-    clearTimeout(tempReset.timeoutTemporizer)
-    document.getElementById("hoursTemporizer").value = 0
-    document.getElementById("minsTemporizer").value = 0
-    document.getElementById("secsTemporizer").value = 0
-    tempReset.hour = 0
-    tempReset.min = 0
-    tempReset.sec = 0
-    tempReset.time.innerHTML = "00:00:00"
 }
