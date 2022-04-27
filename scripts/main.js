@@ -4,7 +4,7 @@
 function reset() {
     var fecha = new Date();
     document.getElementById("textClock").innerHTML = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-    document.getElementById("textChronometer").innerHTML = "00:00:00:00";
+    document.getElementById("textChronometer").innerHTML = "00:00:00:0";
     document.getElementById("textTemporizer").innerHTML = "00:00:00";
 }
 
@@ -147,13 +147,17 @@ function __main__() {
      * segundos maximos por hora
      * @type {number}
      */
+    /**
+     * decisegundos maximos por segundo
+     */
+    const DECISECSECONDS = 10
     const SECONDSHOUR = 3600
     /**
      * Unidades máximas,
-     * [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+     * [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
      * @type {Array}
      */
-    const MAXUNIT = [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+    const MAXUNIT = [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
 
     //AQUI LAS LLAMADAS A CREACIÓN DE INTERVALOS
     //const Timer = objectTiempo()

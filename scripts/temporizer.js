@@ -1,98 +1,78 @@
 /**
- * Gestión del temporizador
- * @param {Array} MAXDIGITTEMP - Unidades máximas; - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
- * @param {number} MAXUNITTEMP - digito máximo para visualización, 10
+ * objeto temporizer :: funciones y atributos asociados al temporizador de la web
  */
-function initiateTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
+class Temporizer extends Time {
+    constructor(hour, min, sec, msec, time, aux_hour, aux_min, aux_sec, aux_msec, start, stop, reset, stopPressed,
+        intervalTime, intervalTemporizer, timeoutTime, timeoutTemporizer) {
+        super(hour, min, sec, msec, time, aux_hour, aux_min, aux_sec, aux_msec)
+        /**
+         * botón de start temporizador
+         * @type {DOMImplementation}
+         */
+        this.start = start
+        /**
+         * boton stop temporizador
+         * @type {DOMImplementation}
+         */
+        this.stop = stop
+        /**
+         * boton reset temporizador
+         * @type {DOMImplementation}
+         */
+        this.reset = reset
+        /**
+         * control si está pulsado el botón stop
+         * @type {Boolean}
+         */
+        this.stopPressed = stopPressed
+
+        this.intervalTime = intervalTime
+        /**
+         * intervalo de tiempo a contar
+         * @type {TimerHandler}
+         */
+        this.intervalTemporizer = intervalTemporizer
+        /**
+         * tiempo a contar en milisegundos 
+         * @type {number}
+         */
+        this.timeoutTime = timeoutTime
+        /**
+         * timeout del temporizador
+         * @type {TimerHandler}
+         */
+        this.timeoutTemporizer = timeoutTemporizer
+
+    }
     /**
-     * funciones y atributos intrínsecos al temporizador
-     * @type {object}
+     * calculo del tiempo en milisegundos
+     * @param {number} MAXSECONDSHOUR - 3600
+     * @param {number} MAXSECONDSMINUTE - 60
+     * @param {number} MAXMSECSECONDS  - 1000
      */
-    var temp = new Temporizer(0, 0, 0, 0,
-        document.getElementById("textTemporizer"),
-        "", "", "", "",
-        document.getElementById("startTemporizer"),
-        document.getElementById("stopTemporizer"),
-        document.getElementById("restartTemporizer"),
-        false, null, 0, null)
+    calculateTimeoutTime(MAXSECONDSHOUR, MAXSECONDSMINUTE, MAXMSECSECONDS) {
+        this.timeoutTime = (this.hour * MAXSECONDSHOUR * MAXMSECSECONDS) + (this.min * MAXSECONDSMINUTE * MAXMSECSECONDS) + (this.sec * MAXMSECSECONDS)
+        //return this.timeoutTime
+    }
+    /**
+     * Cuenta atrás
+     * @param {number} MAXSECONDS - 60
+     * @param {number} MAXMINUTES - 60
+     */
+    subtractSeconds(MAXSECONDS, MAXMINUTES) {
+        if (this.sec != 0) {
+            this.sec--
+        } else {
+            if (this.min == 0) {
+                this.hour--
+                this.min = MAXMINUTES - 1
 
-    temp.start.addEventListener("click", (evt) => {
-        evt.currentTarget.disabled = true
-        temp.stop.disabled = false
-        temp.reset.disabled = false
-        if (!temp.stopPressed) {
-            temp.hour = document.getElementById("hoursTemporizer").value
-            temp.min = document.getElementById("minsTemporizer").value
-            temp.sec = document.getElementById("secsTemporizer").value
-            temp.stopPressed = false
+            } else {
+                this.min--
+
+            }
+            this.sec = MAXSECONDS - 1
         }
-
-        temp.calculateTimeoutTime(MAXUNITTEMP[3], MAXUNITTEMP[1], MAXUNITTEMP[0])
-        console.log(temp.timeoutTime)
-
-        temp.intervalTemporizer = setInterval(activateTemporizer, 1000, temp, MAXDIGITTEMP, MAXUNITTEMP)
-        temp.timeoutTemporizer = setTimeout(countTime, temp.timeoutTime, temp)
-
-        temp.lowerThan10(MAXDIGITTEMP)
-        temp.time.innerHTML = temp.auxHour + ":" + temp.auxMin + ":" + temp.auxSec
-
-        if (temp.time.innerHTML == "00:00:00") {
-            temp.stop.disabled = true
-        }
-    })
-
-    temp.stop.addEventListener("click", (evt) => {
-        evt.currentTarget.disabled = true
-        temp.start.disabled = false
-
-        temp.stopPressed = true
-
-        clearInterval(temp.intervalTemporizer)
-        clearTimeout(temp.timeoutTemporizer)
-    })
-
-    temp.reset.addEventListener("click", (evt) => {
-        evt.currentTarget.disabled = true
-        temp.stop.disabled = true
-        temp.start.disabled = false
-        temp.stopPressed = false
-        clearInterval(temp.intervalTemporizer)
-        clearTimeout(temp.timeoutTemporizer)
-        document.getElementById("hoursTemporizer").value = 0
-        document.getElementById("minsTemporizer").value = 0
-        document.getElementById("secsTemporizer").value = 0
-        temp.hour = 0
-        temp.min = 0
-        temp.sec = 0
-        temp.time.innerHTML = "00:00:00"
-
-    })
-
-
-}
-/**
- * alarma para cuando termina la cuenta atrás
- * @param {object} temporizer - Datos y funciones intrínsecas al temporizador
- */
-function countTime(temporizer) {
-    alert("El temporizador ha terminado")
-    clearInterval(temporizer.intervalTemporizer)
-    clearTimeout(temporizer.timeoutTemporizer)
-
-    temporizer.time.innerHTML = "00:00:00"
-}
-/**
- * Gestión del temporizador
- * @param {object} temporizer - Datos y funciones intrínsecas al temporizador
- * @param {*} MAXDIGITTEMP - digito máximo para visualización, 10
- * @param {*} MAXUNITTEMP - Unidades máximas; 
- * - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
- */
-function activateTemporizer(temporizer, MAXDIGITTEMP, MAXUNITTEMP) {
-
-    temporizer.subtractSeconds(MAXUNITTEMP[1], MAXUNITTEMP[2])
-    temporizer.lowerThan10(MAXDIGITTEMP)
-
-    temporizer.time.innerHTML = temporizer.auxHour + ":" + temporizer.auxMin + ":" + temporizer.auxSec
+    }
 
 }
