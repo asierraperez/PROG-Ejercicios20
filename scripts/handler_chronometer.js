@@ -20,17 +20,9 @@ function initiateCronometro(MAXDIGITCHRONO, MAXUNITCHRONO) {
     Chrono.start.addEventListener("click", (evt) => {
 
         if (!Chrono.startPressed) {
-            evt.currentTarget.style.backgroundColor = "firebrick"
-            Chrono.flag.disabled = false
-            Chrono.startPressed = true
-            Chrono.start.innerHTML = "Pausar"
-            Chrono.intervalChrono = window.setInterval(activateCrono, Chrono.intervalTime, Chrono, MAXDIGITCHRONO, MAXUNITCHRONO)
+            startChrno(Chrono, MAXDIGITCHRONO, MAXUNITCHRONO)
         } else {
-            evt.currentTarget.style.backgroundColor = "chartreuse"
-            Chrono.flag.disabled = true
-            Chrono.startPressed = false
-            Chrono.start.innerHTML = "Start"
-            clearInterval(Chrono.intervalChrono)
+            stopChrono(Chrono)
         }
     })
     Chrono.flag.addEventListener("click", (evt) => {
@@ -38,6 +30,49 @@ function initiateCronometro(MAXDIGITCHRONO, MAXUNITCHRONO) {
     })
 
 }
+
+/**
+ * inciar cronómetro
+ * @param {object} chronoStart 
+ * @param {number} MAXDIGITCHRONO 
+ * @param {Array} MAXUNITCHRONO 
+ */
+function startChrno(chronoStart, MAXDIGITCHRONO, MAXUNITCHRONO) {
+    startToStop(chronoStart)
+    chronoStart.intervalChrono = window.setInterval(activateCrono, chronoStart.intervalTime, chronoStart, MAXDIGITCHRONO, MAXUNITCHRONO)
+}
+
+/**
+ * Cambiar start por stop
+ * @param {object} chronoStartStop 
+ */
+function startToStop(chronoStartStop) {
+    chronoStartStop.start.style.backgroundColor = "firebrick"
+    chronoStartStop.flag.disabled = false
+    chronoStartStop.startPressed = true
+    chronoStartStop.start.innerHTML = "Pausar"
+}
+
+/**
+ * parar cronómetro
+ * @param {object} chronoStop 
+ */
+function stopChrono(chronoStop) {
+    stopToStart(chronoStop)
+    clearInterval(chronoStop.intervalChrono)
+}
+
+/**
+ * Cambiar stop por start
+ * @param {object} chronoStartStop 
+ */
+function stopToStart(chronoStopStart) {
+    chronoStopStart.start.style.backgroundColor = "chartreuse"
+    chronoStopStart.flag.disabled = true
+    chronoStopStart.startPressed = false
+    chronoStopStart.start.innerHTML = "Start"
+}
+
 /**
  * Activación del cronómetro
  * @param {object} auxChrono - funciones y atributos intrinsecos al cronómetro
@@ -51,6 +86,7 @@ function activateCrono(auxChrono, MAXDIGITCHRONO, MAXUNITCHRONO) {
 
     auxChrono.time.innerHTML = auxChrono.auxHour + ":" + auxChrono.auxMin + ":" + auxChrono.auxSec + ":" + auxChrono.auxMsec
 }
+
 /**
  * creación de tiempos de vuelta
  * @param {object} flagChrono - funciones y atributos intrinsecos al cronómetro
