@@ -2,30 +2,29 @@
  * objeto temporizer :: funciones y atributos asociados al temporizador de la web
  */
 class Temporizer extends Time {
+    /** 
+     *@param {number} hour 
+     * @param {number} min 
+     * @param {number} sec 
+     * @param {number} msec 
+     * @param {string} auxHour 
+     * @param {string} auxMin 
+     * @param {string} auxSec 
+     * @param {string} auxMsec
+     * @param {Boolean} stopPressed - observa si se pulsó el boton stop
+     * @param {TimerHandler} intervalTime - Intervalo de tiempo a medir, 1000
+     * @param {TimerHandler} intervalTemporizer - intervalo del cronometro
+     * @param {Number} timeoutTime - Tiempo en milisegundos
+     * @param {TimerHandler} timeoutTemporizer - Cuenta atras
+     */
     constructor(hour, min, sec, msec, aux_hour, aux_min, aux_sec, aux_msec, stopPressed,
         intervalTime, intervalTemporizer, timeoutTime, timeoutTemporizer) {
         super(hour, min, sec, msec, aux_hour, aux_min, aux_sec, aux_msec)
-        /**
-         * control si está pulsado el botón stop
-         * @type {Boolean}
-         */
-        this.stopPressed = stopPressed
 
+        this.stopPressed = stopPressed
         this.intervalTime = intervalTime
-        /**
-         * intervalo de tiempo a contar
-         * @type {TimerHandler}
-         */
         this.intervalTemporizer = intervalTemporizer
-        /**
-         * tiempo a contar en milisegundos 
-         * @type {number}
-         */
         this.timeoutTime = timeoutTime
-        /**
-         * timeout del temporizador
-         * @type {TimerHandler}
-         */
         this.timeoutTemporizer = timeoutTemporizer
 
     }

@@ -1,3 +1,6 @@
+/**
+ * Objetos del HTML
+ */
 class View {
     constructor(preload) {
         this.preload = preload
@@ -36,19 +39,30 @@ class View {
 
     }
 
-
+    /**
+     * Resetear valores
+     */
     reset() {
         this.textClock.innerHTML = "00:00:00";
         this.textCronometer.innerHTML = "00:00:00:0";
         this.textTemporizer.innerHTML = "00:00:00";
     }
 
+    /**
+     * Administra los botones, con la función "eventActivate" se genera un evento para cada uno
+     */
     buttons() {
         this.eventActivate(this.activateClock, this.activateChronometer, this.activateTemporizer);
         this.eventActivate(this.activateChronometer, this.activateClock, this.activateTemporizer);
         this.eventActivate(this.activateTemporizer, this.activateChronometer, this.activateClock);
     }
 
+    /**
+     * Eventos para  mostrar los función que queramos usar y ocultar las demás
+     * @param {DOMImplementation} show - función a mostrar
+     * @param {DOMImplementation} hide1 - Función oculta
+     * @param {DOMImplementation} hide2 - Función oculta
+     */
     eventActivate(show, hide1, hide2) {
         var divShow, divHide1, divHide2;
         divShow = document.getElementById(show.id.split("activate")[1]);
@@ -65,6 +79,10 @@ class View {
         });
     }
 
+    /**
+     * Guarda en localstorage la ultima función mostrada
+     * @param {string} functionName - nombre de la función a mostrar
+     */
     saveDivShown(functionName) {
         if (functionName == "Clock") {
             this.isClock = 1;

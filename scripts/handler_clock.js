@@ -1,17 +1,36 @@
+/**
+ * Gestión el Reloj
+ */
 class clockHandler {
-    constructor(MAXNUM, view) {
+    /**
+     * @param {Number} MAXNUM - digito máximo para visualizacion
+     * @param {Object} viewClock - Objetos del HTML 
+     */
+    constructor(MAXNUM, viewClock) {
         this.MAXNUM = MAXNUM
-        this.view = view
-        this.clk = new Clock(0, 0, 0, 0, view.textClock,
+        this.viewClock = viewClock
+        this.clk = new Clock(0, 0, 0, 0,
             "", "", "", "", null, null)
-        this.clk.intervalClock = setInterval(this.activateClock, 1000, this.clk, MAXNUM);
+
+        this.clk.intervalClock = setInterval(this.activateClock, 1000, this.clk, MAXNUM, this.viewClock);
     }
-    activateClock(actClock, MAXNUM) {
+
+    /**
+     * Gestión del intervalo del reloj
+     * @param {Object} actClock - Funciones y atributos intrínsecos al reloj
+     * @param {Number} MAXNUM - digito máximo para visualizacion
+     * @param {Object} actView - Objetos del HTML
+     */
+    activateClock(actClock, MAXNUM, actView) {
         actClock.setDate()
         actClock.lowerThan10(MAXNUM)
-        actClock.time.innerHTML = actClock.auxHour + ":" + actClock.auxMin + ":" + actClock.auxSec;
+        actView.textClock.innerHTML = actClock.auxHour + ":" + actClock.auxMin + ":" + actClock.auxSec;
     }
-    stopIntervalClock(stop_clock) {
-        clearInterval(stop_clock.intervalClock);
+
+    /**
+     * Resetear intervalo del reloj
+     */
+    stopIntervalClock() {
+        clearInterval(this.clk.intervalClock);
     }
 }

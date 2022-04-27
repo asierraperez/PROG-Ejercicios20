@@ -2,51 +2,26 @@
  * Objeto padre :: funciones y atributos comunes a todos los objetos del programa
  */
 class Time {
+    /**
+    * @param {number} hour 
+     * @param {number} min 
+     * @param {number} sec 
+     * @param {number} msec 
+     * @param {string} auxHour 
+     * @param {string} auxMin 
+     * @param {string} auxSec 
+     * @param {string} auxMsec
+     */
     constructor(hour, min, sec, msec, time, auxHour, auxMin, auxSec, auxMsec) {
-        /**
-         * horas
-         * @type {number}
-         */
+
         this.hour = hour
-        /**
-         * minutos
-         * @type {number}
-         */
         this.min = min
-        /**
-         * segundos
-         * @type {number}
-         */
         this.sec = sec
-        /**
-         * milisegundos
-         * @type {number}
-         */
         this.msec = msec
-        /**
-         * Hora completa
-         * @type {string}
-         */
         this.time = time
-        /**
-         * auxiliar de "hour"
-         * @type {string}
-         */
         this.auxHour = auxHour
-        /**
-         * auxiliar para mostrar minutos
-         * @type {string} 
-         */
         this.auxMin = auxMin
-        /**
-         * auxiliar para mostrar segundos
-         * @type {string}
-         */
         this.auxSec = auxSec
-        /**
-         * auxiliar para mostrar milisegundos
-         * @type {string}
-         */
         this.auxMsec = auxMsec
     }
     /**

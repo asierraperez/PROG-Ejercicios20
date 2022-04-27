@@ -1,14 +1,22 @@
 /**
  * Gestión del temporizador
- * @param {Array} MAXDIGITTEMP - Unidades máximas; - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
- * @param {number} MAXUNITTEMP - digito máximo para visualización, 10
  */
 class tempHandler {
+    /**
+     * 
+    * @param {Number} MAXDIGITTEMP - digito máximo para visualizacion
+     * @param {Array} MAXUNITTEMP - Unidades máximas, - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
+     * @param {Object} viewTemp - Objetos del HTML
+     */
     constructor(MAXDIGITTEMP, MAXUNITTEMP, viewTemp) {
         this.MAXDIGITTEMP = MAXDIGITTEMP
         this.MAXUNITTEMP = MAXUNITTEMP
         this.viewTemp = viewTemp
 
+        /**
+         * Funciones y atributos intrínsecos al temporizador
+         * @type {object} 
+         */
         this.temp = new Temporizer(0, 0, 0, 0,
             "", "", "", "",
             false, null, 0, null)
@@ -16,7 +24,12 @@ class tempHandler {
         this.eventStart()
 
     }
+
+    /**
+     * Getión de los eventos
+     */
     eventStart() {
+        //Start temporizador
         this.viewTemp.startTemporizer.addEventListener("click", (evt) => {
             evt.currentTarget.disabled = true
             this.viewTemp.stopTemporizer.disabled = false
@@ -39,6 +52,7 @@ class tempHandler {
             }
         })
 
+        //Stop Temporizador
         this.viewTemp.stopTemporizer.addEventListener("click", (evt) => {
             evt.currentTarget.disabled = true
             this.viewTemp.startTemporizer.disabled = false
@@ -49,11 +63,18 @@ class tempHandler {
             clearTimeout(this.temp.timeoutTemporizer)
         })
 
+        //Reset Temporizador
         this.viewTemp.restartTemporizer.addEventListener("click", (evt) => {
             evt.currentTarget.disabled = true
             this.resetTemporizer()
         })
     }
+
+    /**
+     * Alerta al terminar la cuenta atrás
+     * @param {Object} temporizer - Funciones y atributos intrínsecos al temporizador
+     * @param {Object} viewCount - Objetos del HTML
+     */
     countTime(temporizer, viewCount) {
         alert("El temporizador ha terminado")
         clearInterval(temporizer.intervalTemporizer)
@@ -61,6 +82,14 @@ class tempHandler {
 
         viewCount.textTemporizer.innerHTML = "00:00:00"
     }
+
+    /**
+     * Gestión del intervalo
+     * @param {Object} temporizer - Funciones y atributos intrínsecos al temporizador
+     * @param {Number} MAXDIGITTEMP - digito máximo para visualizacion
+     * @param {Array} MAXUNITTEMP - Unidades máximas, - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
+     * @param {Object} actViewTemp  - Objetos del HTML
+     */
     activateTemporizer(temporizer, MAXDIGITTEMP, MAXUNITTEMP, actViewTemp) {
 
         temporizer.subtractSeconds(MAXUNITTEMP[1], MAXUNITTEMP[2])
@@ -68,12 +97,20 @@ class tempHandler {
         actViewTemp.textTemporizer.innerHTML = temporizer.auxHour + ":" + temporizer.auxMin + ":" + temporizer.auxSec
 
     }
+
+    /**
+     * Obtener tiempo de los selectores
+     */
     getTime() {
         this.temp.hour = this.viewTemp.hoursTemporizer.value
         this.temp.min = this.viewTemp.minsTemporizer.value
         this.temp.sec = this.viewTemp.secsTemporizer.value
         this.temp.stopPressed = false
     }
+
+    /**
+     * resetear temporizador
+     */
     resetTemporizer() {
         this.viewTemp.stopTemporizer.disabled = true
         this.viewTemp.startTemporizer.disabled = false

@@ -3,8 +3,16 @@
  * Esta función sirve para hacer la precarga de la página, ocultando los apartados que no son necesarios o cargando los que si
  */
 class preload {
-
+    /**
+     * Ocultar funciones no usadas
+     * @param {DOMImplementation} clock - Función Reloj
+     * @param {DOMImplementation} chronometer - Función cronómetro
+     * @param {DOMImplementation} temporizer - Función temporizador
+     */
     hidNonUsed(clock, chronometer, temporizer) {
+        /**
+         * Variables de control de la función actual
+         */
         var isClock, isChronometer, isTemporizer;
         isClock = localStorage.getItem("isClock");
         isClock = parseInt(isClock)
@@ -40,6 +48,12 @@ class preload {
 
     }
 
+    /**
+     * Generar opciones para los selectores del temporizador
+     * @param {DOMImplementation} hours 
+     * @param {DOMImplementation} mins 
+     * @param {DOMImplementation} secs 
+     */
     selectorsTemporizer(hours, mins, secs) {
         /**
          * selector de horas a temporizar

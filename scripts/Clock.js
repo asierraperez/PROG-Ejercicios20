@@ -2,17 +2,22 @@
  * objeto clock :: funciones y atributos asociados al reloj de la web
  */
 class Clock extends Time {
+    /**
+     * 
+     * @param {number} hour 
+     * @param {number} min 
+     * @param {number} sec 
+     * @param {number} msec 
+     * @param {string} auxHour 
+     * @param {string} auxMin 
+     * @param {string} auxSec 
+     * @param {string} auxMsec 
+     * @param {Date} date - fecha a dia de hoy
+     * @param {TimerHandler} intervalClock - Intervalo del reloj
+     */
     constructor(hour, min, sec, msec, time, auxHour, auxMin, auxSec, auxMsec, date, intervalClock) {
         super(hour, min, sec, msec, time, auxHour, auxMin, auxSec, auxMsec)
-        /**
-         * fecha actual
-         * @type {Date}
-         */
         this.date = date
-        /**
-         * intervalo del temporizador
-         * @type {TimerHandler}
-         */
         this.intervalClock = intervalClock
     }
     /**

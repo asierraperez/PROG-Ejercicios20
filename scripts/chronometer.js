@@ -2,24 +2,27 @@
  * Objeto cronómetro :: funciones y atributos asociados al cronómetro de la web
  */
 class Chronometer extends Time {
+    /**
+     * @param {number} hour 
+     * @param {number} min 
+     * @param {number} sec 
+     * @param {number} msec 
+     * @param {string} auxHour 
+     * @param {string} auxMin 
+     * @param {string} auxSec 
+     * @param {string} auxMsec 
+     * @param {boolean} startPressed - observa si se pulsó el boton start
+     * @param {TimerHandler} intervalChrono - intervalo del cronometro
+     * @param {TimerHandler} intervalTime - Intervalo de tiempo a medir, 100
+     * @param {Array} timeList - Lista de tiempos parciales
+     */
     constructor(hour, min, sec, msec, auxHour, auxMin, auxSec, auxMsec, startPressed, intervalChrono, intervalTime,
         timeList) {
         super(hour, min, sec, msec, auxHour, auxMin, auxSec, auxMsec)
-        /**
-         * control se está pulsado start
-         * @type {boolean}
-         */
+
         this.startPressed = startPressed
-        /**
-         * intervalo de tiempo a cronometrar
-         * @type {TimerHandler}
-         */
         this.intervalChrono = intervalChrono
         this.intervalTime = intervalTime
-        /**
-         * lista de tiempos 
-         * @type {DOMImplementation}
-         */
         this.timeList = timeList
     }
     /**

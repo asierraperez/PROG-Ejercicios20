@@ -1,3 +1,6 @@
+/**
+ * RELOJ MULTIFUNCIÓN
+ */
 class Controller {
     constructor(view) {
         this.view = view
@@ -41,10 +44,23 @@ class Controller {
         const MAXUNIT = [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
         //this.clock=this.createClock()
 
+
+        /**
+        * función Reloj
+        * @type {Object}
+        */
         this.clock = new clockHandler(MAXDIGIT, view)
 
+        /**
+        * función cronómetro
+        * @type {Object}
+        */
         this.chronometer = new chronoHandler(MAXDIGIT, MAXUNIT, this.view)
 
+        /**
+        * función temporizador
+        * @type {Object}
+        */
         this.temporizer = new tempHandler(MAXDIGIT, MAXUNIT, this.view)
 
     }
