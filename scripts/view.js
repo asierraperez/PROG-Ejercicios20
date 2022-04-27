@@ -9,7 +9,7 @@ class View {
         this.textClock = document.getElementById("textClock")
         this.textCronometer = document.getElementById("textChronometer")
         this.textTemporizer = document.getElementById("textTemporizer")
-        //botones
+        //botones de funcion
         this.activateClock = document.getElementById("activateClock");
         this.activateChronometer = document.getElementById("activateChronometer");
         this.activateTemporizer = document.getElementById("activateTemporizer");
@@ -21,6 +21,11 @@ class View {
         this.isClock = 0
         this.isChronometer = 0
         this.isTemporizer = 0
+        //botones cronómetro
+        this.startChrono = document.getElementById("startChronometer")
+        this.flagChrono = document.getElementById("flagChronometer")
+        //lista tiempos parciales
+        this.partialTimes = document.getElementById("partialTimes")
 
         preload.hidNonUsed(this.clock, this.chronometer, this.temporizer)
         preload.selectorsTemporizer(this.hoursTemporizer, this.minsTemporizer, this.secsTemporizer)

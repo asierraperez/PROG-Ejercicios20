@@ -4,95 +4,74 @@
  * @param {Array} MAXUNITCHRONO - Unidades máximas, - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
 
  */
-function initiateCronometro(MAXDIGITCHRONO, MAXUNITCHRONO) {
-    /**
-     * funciones y atributos intrinsecos al cronómetro
-     * @type {object}
-     */
-    const Chrono = new Chronometer(0, 0, 0, 0,
-        document.getElementById("textChronometer"),
-        "", "", "", "",
-        document.getElementById("startChronometer"),
-        document.getElementById("flagChronometer"),
-        false, null, 100,
-        document.getElementById("partialTimes"), "")
+class chronoHandler {
+    constructor(MAXDIGITCHRONO, MAXUNITCHRONO, view) {
 
-    Chrono.start.addEventListener("click", (evt) => {
+        this.MAXDIGITCHRONO = MAXDIGITCHRONO
+        this.MAXUNITCHRONO = MAXUNITCHRONO
+        this.view = view
+        this.i = 0
 
-        if (!Chrono.startPressed) {
-            startChrno(Chrono, MAXDIGITCHRONO, MAXUNITCHRONO)
-        } else {
-            stopChrono(Chrono)
-        }
-    })
-    Chrono.flag.addEventListener("click", (evt) => {
-        flagTime(Chrono)
-    })
+        this.chrono = new Chronometer(0, 0, 0, 0,
+            "", "", "", "",
+            false, null, 100,
+            null)
+        this.chrono.timeList = new Array
 
-}
+        this.eventStart()
 
-/**
- * inciar cronómetro
- * @param {object} chronoStart 
- * @param {number} MAXDIGITCHRONO 
- * @param {Array} MAXUNITCHRONO 
- */
-function startChrno(chronoStart, MAXDIGITCHRONO, MAXUNITCHRONO) {
-    startToStop(chronoStart)
-    chronoStart.intervalChrono = window.setInterval(activateCrono, chronoStart.intervalTime, chronoStart, MAXDIGITCHRONO, MAXUNITCHRONO)
-}
 
-/**
- * Cambiar start por stop
- * @param {object} chronoStartStop 
- */
-function startToStop(chronoStartStop) {
-    chronoStartStop.start.style.backgroundColor = "firebrick"
-    chronoStartStop.flag.disabled = false
-    chronoStartStop.startPressed = true
-    chronoStartStop.start.innerHTML = "Pausar"
-}
+    }
+    eventStart() {
+        this.view.startChrono.addEventListener("click", (evt) => {
 
-/**
- * parar cronómetro
- * @param {object} chronoStop 
- */
-function stopChrono(chronoStop) {
-    stopToStart(chronoStop)
-    clearInterval(chronoStop.intervalChrono)
-}
+            if (!this.chrono.startPressed) {
+                this.startChrno()
+            } else {
+                this.stopChrono()
+            }
+        })
+        this.view.flagChrono.addEventListener("click", (evt) => {
+            this.flagTime()
+        })
+    }
 
-/**
- * Cambiar stop por start
- * @param {object} chronoStartStop 
- */
-function stopToStart(chronoStopStart) {
-    chronoStopStart.start.style.backgroundColor = "chartreuse"
-    chronoStopStart.flag.disabled = true
-    chronoStopStart.startPressed = false
-    chronoStopStart.start.innerHTML = "Start"
-}
+    startChrno() {
+        this.startToStop()
+        this.chrono.intervalChrono = window.setInterval(this.activateCrono, this.chrono.intervalTime, this.chrono, this.MAXUNITCHRONO, this.MAXDIGITCHRONO, this.view)
+    }
+    startToStop() {
+        this.view.startChrono.style.backgroundColor = "firebrick"
+        this.view.flagChrono.disabled = false
+        this.chrono.startPressed = true
+        this.view.startChrono.innerHTML = "Pausar"
+    }
 
-/**
- * Activación del cronómetro
- * @param {object} auxChrono - funciones y atributos intrinsecos al cronómetro
- * @param {number} MAXDIGITCHRONO - digito máximo para visualizacion
- * @param {Array} MAXUNITCHRONO - Unidades máximas, - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
- */
-function activateCrono(auxChrono, MAXDIGITCHRONO, MAXUNITCHRONO) {
 
-    auxChrono.addSeconds(MAXUNITCHRONO[4], MAXUNITCHRONO[1], MAXUNITCHRONO[2])
-    auxChrono.lowerThan10(MAXDIGITCHRONO)
+    activateCrono(actChrono, UNITCHRONO, DIGITCHRONO, actView) {
 
-    auxChrono.time.innerHTML = auxChrono.auxHour + ":" + auxChrono.auxMin + ":" + auxChrono.auxSec + ":" + auxChrono.auxMsec
-}
+        actChrono.addSeconds(UNITCHRONO[4], UNITCHRONO[2], UNITCHRONO[3])
+        actChrono.lowerThan10(DIGITCHRONO)
 
-/**
- * creación de tiempos de vuelta
- * @param {object} flagChrono - funciones y atributos intrinsecos al cronómetro
- */
-function flagTime(flagChrono) {
+        actView.textCronometer.innerHTML = actChrono.auxHour + ":" + actChrono.auxMin + ":" + actChrono.auxSec + ":" + actChrono.auxMsec
+    }
 
-    flagChrono.timeFlag = flagChrono.time.innerHTML
-    flagChrono.timeList.innerHTML = flagChrono.timeList.innerHTML + "<li/>" + flagChrono.timeFlag
+
+    stopChrono() {
+        this.stopToStart()
+        clearInterval(this.chrono.intervalChrono)
+    }
+    stopToStart() {
+        this.view.startChrono.style.backgroundColor = "chartreuse"
+        this.view.flagChrono.disabled = true
+        this.chrono.startPressed = false
+        this.view.startChrono.innerHTML = "Start"
+    }
+    flagTime() {
+
+        this.chrono.timeList[this.i] = this.view.textCronometer.innerHTML
+        this.view.partialTimes.innerHTML = this.view.partialTimes.innerHTML + "<li/>" + this.view.textCronometer.innerHTML
+        this.i++
+    }
+
 }

@@ -2,19 +2,9 @@
  * Objeto cronómetro :: funciones y atributos asociados al cronómetro de la web
  */
 class Chronometer extends Time {
-    constructor(hour, min, sec, msec, time, auxHour, auxMin, auxSec, auxMsec, start, flag, startPressed, intervalChrono, intervalTime,
-        timeList, timeFlag) {
-        super(hour, min, sec, msec, time, auxHour, auxMin, auxSec, auxMsec)
-        /**
-        * botón de start cronómetro
-        * @type {DOMImplementation}
-        */
-        this.start = start
-        /**
-        * botón de flag cronómetro
-        * @type {DOMImplementation}
-        */
-        this.flag = flag
+    constructor(hour, min, sec, msec, auxHour, auxMin, auxSec, auxMsec, startPressed, intervalChrono, intervalTime,
+        timeList) {
+        super(hour, min, sec, msec, auxHour, auxMin, auxSec, auxMsec)
         /**
          * control se está pulsado start
          * @type {boolean}
@@ -31,11 +21,6 @@ class Chronometer extends Time {
          * @type {DOMImplementation}
          */
         this.timeList = timeList
-        /**
-         * tiempo al pulsar flag
-         * @type {string}
-         */
-        this.timeFlag = timeFlag
     }
     /**
      * cuenta hacia delante

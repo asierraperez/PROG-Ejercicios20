@@ -1,8 +1,8 @@
 class Controller {
     constructor(view) {
         this.view = view
-        view.reset()
-        view.buttons()
+        this.view.reset()
+        this.view.buttons()
 
         /**
         * digito máximo para visualizacion
@@ -42,6 +42,8 @@ class Controller {
         //this.clock=this.createClock()
 
         this.clock = new clockHandler(MAXDIGIT, view)
+
+        this.chronometer = new chronoHandler(MAXDIGIT, MAXUNIT, this.view)
 
     }
 
