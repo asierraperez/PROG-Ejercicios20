@@ -7,11 +7,8 @@ class Controller {
         //this.clock=this.createClock()
     }
 
-    createClock() {
-        return new Clock(0, 0, 0, 0, document.getElementById("textClock"),
-            "", "", "", "", null, null)
-        clk.intervalClock = setInterval(activateClock, 1000, clk, MAXNUM)
-    }
+
+
 
 }
 

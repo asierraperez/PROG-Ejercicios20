@@ -17,10 +17,6 @@ class View {
         this.hoursTemporizer = document.getElementById("hoursTemporizer");
         this.minsTemporizer = document.getElementById("minsTemporizer");
         this.secsTemporizer = document.getElementById("secsTemporizer");
-        //elementos a mostrar
-        this.divShow
-        this.divHide1
-        this.divHide2
         //guardado de funciones
         this.isClock = 0
         this.isChronometer = 0
@@ -45,18 +41,18 @@ class View {
     }
 
     eventActivate(show, hide1, hide2) {
-
-        this.divShow = document.getElementById(show.id.split("activate")[1]);
-        this.divHide1 = document.getElementById(hide1.id.split("activate")[1]);
-        this.divHide2 = document.getElementById(hide2.id.split("activate")[1]);
+        var divShow, divHide1, divHide2;
+        divShow = document.getElementById(show.id.split("activate")[1]);
+        divHide1 = document.getElementById(hide1.id.split("activate")[1]);
+        divHide2 = document.getElementById(hide2.id.split("activate")[1]);
         //Al diseñar los divs de tal manera que su nombre sea la extensión del resto de elmentos podemos
         //Referenciarlos simplemente dividiendo la cadena del ID del resto y recogiendo el primer elemento.
         show.addEventListener("click", () => {
             this.reset();
-            this.divShow.style.display = "block";
-            this.divHide1.style.display = "none";
-            this.divHide2.style.display = "none";
-            this.saveDivShown(this.divShow.id)
+            divShow.style.display = "block";
+            divHide1.style.display = "none";
+            divHide2.style.display = "none";
+            this.saveDivShown(divShow.id)
         });
     }
 
