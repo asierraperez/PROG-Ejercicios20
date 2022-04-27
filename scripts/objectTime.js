@@ -12,11 +12,11 @@ class Time {
         this.auxMsec = auxMsec
     }
 
-    lowerThan10() {
-        this.msec >= 10 ? this.auxMsec = this.msec : this.auxMsec = "0" + this.msec
-        this.sec >= 10 ? this.auxSec = this.sec : this.auxSec = "0" + this.sec
-        this.min >= 10 ? this.auxMin = this.min : this.auxMin = "0" + this.min
-        this.hour >= 10 ? this.auxHour = this.hour : this.auxHour = "0" + this.hour
+    lowerThan10(MAXNUM) {
+        this.auxMsec = this.msec
+        this.sec >= MAXNUM ? this.auxSec = this.sec : this.auxSec = "0" + this.sec
+        this.min >= MAXNUM ? this.auxMin = this.min : this.auxMin = "0" + this.min
+        this.hour >= MAXNUM ? this.auxHour = this.hour : this.auxHour = "0" + this.hour
     }
 }
     //return tiempo

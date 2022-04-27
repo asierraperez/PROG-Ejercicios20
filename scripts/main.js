@@ -65,22 +65,22 @@ function botones() {
     eventActivate(activateTemporizer, activateChronometer, activateClock);
 }
 
-function activateClock(reloj) {
+function activateClock(act_clock, MAXNUM) {
 
-    reloj.setDate()
-    reloj.lowerThan10()
-    reloj.time.innerHTML = reloj.auxHour + ":" + reloj.auxMin + ":" + reloj.auxSec;
+    act_clock.setDate()
+    act_clock.lowerThan10(MAXNUM)
+    act_clock.time.innerHTML = act_clock.auxHour + ":" + act_clock.auxMin + ":" + act_clock.auxSec;
 
 }
 
-function crearIntervaloReloj(Timer) {
+function crearIntervaloReloj(MAXNUM) {
 
     //const clock = ObjectReloj(Timer)
 
 
     const clk = new Clock(0, 0, 0, 0, document.getElementById("textClock"),
         "", "", "", "", null, null)
-    clk.intervalClock = setInterval(activateClock, 1000, clk);
+    clk.intervalClock = setInterval(activateClock, 1000, clk, MAXNUM);
 }
 
 function stopIntervalClock(reloj) {
@@ -93,20 +93,24 @@ function __main__() {
     reset();
     botones();
 
-    //Vamos a utilizar el objeto "window" para establecer las variables de los intervalos y temporizadores de forma global
-    //Y no tener que utilizar parámetros para enviar o recibirlas, pues puede acabar liándonos en estos ejercicos.
-
-    //window.intervalo_reloj = null;
-    //window.intervalo_cronometro = null;
-    //window.temporizador_temporizador = null;
-    //window.intervalo_temporizador = null;
+    const MAXDIGIT = 10
+    const MSECSECONDS = 1000
+    const SECONDSMINUTE = 60
+    const MINUTESHOUR = 60
+    const SECONDSHOUR = 3600
+    /**
+     * Unidades máximas,
+     * [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+     * @type {Array[number]}
+     */
+    const MAXUNIT = [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
 
     //AQUI LAS LLAMADAS A CREACIÓN DE INTERVALOS
     //const Timer = objectTiempo()
 
-    crearIntervaloReloj(); //Como es un reloj, no haría falta detener el intervalo, pero se crea el método stopIntervaloReloj, por se acaso
-    iniciaCronometro()
-    iniciaTemporizador()
+    crearIntervaloReloj(MAXDIGIT); //Como es un reloj, no haría falta detener el intervalo, pero se crea el método stopIntervaloReloj, por se acaso
+    iniciaCronometro(MAXDIGIT, MAXUNIT)
+    iniciaTemporizador(MAXDIGIT, MAXUNIT)
 
 }
 

@@ -1,4 +1,9 @@
-function iniciaTemporizador() {
+/**
+ * Gestión del temporizador
+ * @param {Array [number] } MAXDIGITTEMP - Unidades máximas; - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+ * @param {number} MAXUNITTEMP - digito máximo para visualización, 10
+ */
+function iniciaTemporizador(MAXDIGITTEMP, MAXUNITTEMP) {
 
     //const Temporizer = ObjectTemporizer(temp_time)
 
@@ -21,13 +26,13 @@ function iniciaTemporizador() {
             temp.stopPressed = false
         }
 
-        temp.calculateTimeoutTime()
+        temp.calculateTimeoutTime(MAXUNITTEMP[3], MAXUNITTEMP[1], MAXUNITTEMP[0])
         console.log(temp.timeoutTime)
 
-        temp.intervalTemporizer = setInterval(activateTemporizer, 1000, temp)
+        temp.intervalTemporizer = setInterval(activateTemporizer, 1000, temp, MAXDIGITTEMP, MAXUNITTEMP)
         temp.timeoutTemporizer = setTimeout(countTime, temp.timeoutTime, temp)
 
-        temp.menorQue10()
+        temp.lowerThan10(MAXDIGITTEMP)
         temp.time.innerHTML = temp.auxHour + ":" + temp.auxMin + ":" + temp.auxSec
 
         if (temp.time.innerHTML == "00:00:00") {
@@ -72,11 +77,17 @@ function countTime(temporizer) {
 
     temporizer.time.innerHTML = "00:00:00"
 }
+/**
+ * 
+ * @param {object} temporizer - Datos y funciones intrínsecas al temporizador
+ * @param {*} MAXDIGITTEMP - Unidades máximas; 
+ * - [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR]
+ * @param {*} MAXUNITTEMP - digito máximo para visualización, 10
+ */
+function activateTemporizer(temporizer, MAXDIGITTEMP, MAXUNITTEMP) {
 
-function activateTemporizer(temporizer) {
-
-    temporizer.subtractSeconds()
-    temporizer.lowerThan10()
+    temporizer.subtractSeconds(MAXUNITTEMP[1], MAXUNITTEMP[2])
+    temporizer.lowerThan10(MAXDIGITTEMP)
 
     temporizer.time.innerHTML = temporizer.auxHour + ":" + temporizer.auxMin + ":" + temporizer.auxSec
 

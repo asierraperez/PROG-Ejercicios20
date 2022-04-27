@@ -14,24 +14,24 @@ class Temporizer extends Time {
 
     }
 
-    calculateTimeoutTime() {
-        this.timeoutTime = (this.hour * 3600 * 1000) + (this.min * 60 * 1000) + (this.sec * 1000)
+    calculateTimeoutTime(MAXSECONDSHOUR, MAXSECONDSMINUTE, MAXMSECSECONDS) {
+        this.timeoutTime = (this.hour * MAXSECONDSHOUR * MAXMSECSECONDS) + (this.min * MAXSECONDSMINUTE * MAXMSECSECONDS) + (this.sec * MAXMSECSECONDS)
         return this.timeoutTime
     }
 
-    subtractSeconds() {
+    subtractSeconds(MAXSECONDS, MAXMINUTES) {
         if (this.sec != 0) {
             this.sec--
         } else {
             if (this.min == 0) {
                 this.hour--
-                this.min = 59
+                this.min = MAXMINUTES - 1
 
             } else {
                 this.min--
 
             }
-            this.sec = 59
+            this.sec = MAXSECONDS - 1
         }
     }
 

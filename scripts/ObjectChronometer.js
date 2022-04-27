@@ -11,15 +11,15 @@ class Chronometer extends Time {
         this.timeFlag = timeFlag
     }
 
-    addSeconds() {
+    addSeconds(MAXMSEC, MAXSECONDS, MAXMINUTE) {
         this.msec++
-        if (this.msec > 9) {
+        if (this.msec > MAXMSEC - 1) {
             this.sec++
             this.msec = 0
-            if (this.sec > 59) {
+            if (this.sec > MAXSECONDS - 1) {
                 this.min++
                 this.sec = 0
-                if (this.min > 59) {
+                if (this.min > MAXMINUTE - 1) {
                     this.hour++
                     this.min = 0
                 }

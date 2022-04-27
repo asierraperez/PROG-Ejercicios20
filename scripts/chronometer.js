@@ -1,4 +1,4 @@
-function iniciaCronometro() {
+function iniciaCronometro(MAXDIGITCHRONO, MAXUNITCHRONO) {
 
     const Chrono = new Chronometer(0, 0, 0, 0,
         document.getElementById("textChronometer"),
@@ -15,7 +15,7 @@ function iniciaCronometro() {
             Chrono.flag.disabled = false
             Chrono.startPressed = true
             Chrono.start.innerHTML = "Pausar"
-            Chrono.intervalChrono = window.setInterval(activateCrono, Chrono.intervalTime, Chrono)
+            Chrono.intervalChrono = window.setInterval(activateCrono, Chrono.intervalTime, Chrono, MAXDIGITCHRONO, MAXUNITCHRONO)
         } else {
             evt.currentTarget.style.backgroundColor = "chartreuse"
             Chrono.flag.disabled = true
@@ -30,10 +30,10 @@ function iniciaCronometro() {
 
 }
 
-function activateCrono(auxChrono) {
+function activateCrono(auxChrono, MAXDIGITCHRONO, MAXUNITCHRONO) {
 
-    auxChrono.addSeconds()
-    auxChrono.lowerThan10()
+    auxChrono.addSeconds(MAXUNITCHRONO[0], MAXUNITCHRONO[1], MAXUNITCHRONO[2])
+    auxChrono.lowerThan10(MAXDIGITCHRONO)
 
     auxChrono.time.innerHTML = auxChrono.auxHour + ":" + auxChrono.auxMin + ":" + auxChrono.auxSec + ":" + auxChrono.auxMsec
 }
