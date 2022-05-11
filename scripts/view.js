@@ -105,6 +105,13 @@ class View {
         localStorage.setItem("isTemporizer", this.isTemporizer);
     }
 
+    //Reloj
+
+    actualizeClock({ auxHour, auxMin, auxSec }) {
+        this.textClock.innerHTML = auxHour + ":" + auxMin + ":" + auxSec;
+    }
+
+
 
 
 }

@@ -2,15 +2,15 @@
  * RELOJ MULTIFUNCIÓN
  */
 class Controller {
-    constructor(view) {
+    constructor(model, view) {
         this.view = view
+        this.model = model
         this.view.reset()
         this.view.buttons()
-
         /**
         * digito máximo para visualizacion
         * @type {number}
-         */
+        */
         const MAXDIGIT = 10
         /**
          * milisegundos maximos por segundo
@@ -42,27 +42,29 @@ class Controller {
          * @type {Array}
          */
         const MAXUNIT = [MSECSECONDS, SECONDSMINUTE, MINUTESHOUR, SECONDSHOUR, DECISECSECONDS]
-        //this.clock=this.createClock()
 
 
-        /**
-        * función Reloj
-        * @type {Object}
-        */
-        this.clock = new clockHandler(MAXDIGIT, view)
+        this.model.clock.clk.intervalClock = setInterval(this.activateClock, 1000, this.model.clock.clk, MAXDIGIT, this.view);
 
-        /**
-        * función cronómetro
-        * @type {Object}
-        */
-        this.chronometer = new chronoHandler(MAXDIGIT, MAXUNIT, this.view)
 
-        /**
-        * función temporizador
-        * @type {Object}
-        */
-        this.temporizer = new tempHandler(MAXDIGIT, MAXUNIT, this.view)
 
+
+
+
+
+    }
+    /**
+     * Gestión del intervalo del reloj
+     * @param {Object} actClock - Funciones y atributos intrínsecos al reloj
+     * @param {Number} MAXNUM - digito máximo para visualizacion
+     * @param {Object} actView - Objetos del HTML
+     */
+    activateClock(actClock, MAXNUM, viewClock) {
+
+        actClock.setDate()
+        actClock.lowerThan10(MAXNUM)
+        viewClock.actualizeClock(actClock)
+        //actView.textClock.innerHTML = actClock.auxHour + ":" + actClock.auxMin + ":" + actClock.auxSec;
     }
 
 
@@ -72,4 +74,4 @@ class Controller {
 
 }
 
-const app = new Controller(new View(new preload))
+const app = new Controller(new Model, new View(new preload))
