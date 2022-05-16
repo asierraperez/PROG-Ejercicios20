@@ -111,6 +111,46 @@ class View {
         this.textClock.innerHTML = auxHour + ":" + auxMin + ":" + auxSec;
     }
 
+    //Cronometro
+
+    actualizeChrono({ auxHour, auxMin, auxSec, auxMsec }) {
+        this.textCronometer.innerHTML = auxHour + ":" + auxMin + ":" + auxSec + ":" + auxMsec;
+    }
+
+    actualizeFlagChrono({ auxHour, auxMin, auxSec, auxMsec }) {
+        this.partialTimes.innerHTML = this.partialTimes.innerHTML + "<li/>" + auxHour + ":" + auxMin + ":" + auxSec + ":" + auxMsec
+
+    }
+
+    bindStartChrono(handler) {
+        this.startChrono.addEventListener("click", evt => {
+            handler()
+        })
+    }
+
+    bindFlagChrono(handler) {
+        this.flagChrono.addEventListener("click", evt => {
+            handler()
+        })
+    }
+    /**
+     * Cambiar el botón Start por Stop
+     */
+    startToStop() {
+        this.startChrono.style.backgroundColor = "firebrick"
+        this.flagChrono.disabled = false
+        this.startChrono.innerHTML = "Pausar"
+    }
+
+    /**
+     * Cambiar el botón Stop por Start
+     */
+    stopToStart() {
+        this.startChrono.style.backgroundColor = "chartreuse"
+        this.flagChrono.disabled = true
+        this.startChrono.innerHTML = "Start"
+    }
+
 
 
 

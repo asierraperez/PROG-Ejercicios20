@@ -14,7 +14,7 @@ class Model {
         * función cronómetro
         * @type {Object}
         */
-        //this.chronometer = new chronoHandler(MAXDIGIT, MAXUNIT)
+        this.chronometer = new chronoHandler()
 
         /**
         * función temporizador
